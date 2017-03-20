@@ -1,28 +1,25 @@
-\NeedsTeXFormat{LaTeX2e}%
-\ProvidesPackage{ECULetter}
-\usepackage[letterpaper, hmargin={2in,1in}, vmargin=1in]{geometry}
-\usepackage{graphicx}
-\usepackage{amssymb}
-\usepackage{fancyhdr}
-\usepackage{lastpage}
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesClass{ECUletter}%[ECULetter version 0.1 2017-01-17]
+\LoadClass[11pt]{article}
 
-% Option bw uses the black and white image for the letterhead.
 \newif\if@bw
 \@bwfalse
+\newif\if@nowww
+\@nowwwfalse
 
-% Below are some options for generating alternate addresses. They are commented because 
-% they are no longer in use.
-%\newif\if@cof
-%\@coffalse
-%
-%\newif\if@acus
-%\@acusfalse
-
+\RequirePackage[letterpaper, hmargin={2in,1in}, vmargin=1in]{geometry}
+\RequirePackage{graphicx}
+\RequirePackage{amssymb}
+\RequirePackage{fancyhdr}
+\RequirePackage{lastpage}
+\usepackage{calc}
+\usepackage{wrapfig}
 
 \DeclareOption{bw}{\@bwtrue}
 \DeclareOption{color}{\@bwfalse}
+\DeclareOption{nowww}{\@nowwwtrue}
+%\DeclareOption*{PassOptionsToPackage{\CurrentOption}{geometry}}
 \ProcessOptions\relax
-
 
 \renewcommand{\headrulewidth}{0pt}
 \renewcommand{\footrulewidth}{0pt}
@@ -31,35 +28,96 @@
 
 \newif\if@lhnamedefined
 \@lhnamedefinedfalse
-\newcommand{\lhname}[1]{\gdef\@lhname{#1} \@lhnamedefinedtrue}
+\def\@lhname{\relax}
+\newcommand{\lhname}[1]{
+  \gdef\@lhname{#1}
+  \setbox0=\hbox{\@lhname\unskip}\ifdim\wd0=0pt
+    \@lhnamedefinedfalse
+  \else
+    \@lhnamedefinedtrue
+  \fi
+}
+
 
 \newif\if@lhdegreedefined
 \@lhdegreedefinedfalse
-\newcommand{\lhdegree}[1]{\gdef\@lhdegree{#1} \@lhdegreedefinedtrue}
+\def\@lhdegree{\relax}
+\newcommand{\lhdegree}[1]{
+  \gdef\@lhdegree{#1}
+  \setbox0=\hbox{\@lhdegree\unskip}\ifdim\wd0=0pt
+    \@lhdegreedefinedfalse
+  \else
+    \@lhdegreedefinedtrue
+  \fi
+}
+
 
 \newif\if@lhtitledefined
 \@lhtitledefinedfalse
-\newcommand{\lhtitle}[1]{\gdef\@lhtitle{#1} \@lhtitledefinedtrue}
+\def\@lhtitle{\relax}
+\newcommand{\lhtitle}[1]{
+  \gdef\@lhtitle{#1}
+  \setbox0=\hbox{\@lhtitle\unskip}\ifdim\wd0=0pt
+    \@lhtitledefinedfalse
+  \else
+    \@lhtitledefinedtrue
+  \fi
+}
 
 \newif\if@lhECUaddressdefined
 \@lhECUaddressdefinedfalse
+\def\@lhECUaddress{\relax}
 \newcommand{\lhECUaddress}[1]{\gdef\@lhECUaddress{#1} \@lhECUaddressdefinedtrue}
+
 
 \newif\if@lhphonedefined
 \@lhphonedefinedfalse
-\newcommand{\lhphone}[1]{\gdef\@lhphone{#1} \@lhphonedefinedtrue}
+\def\@lhphone{\relax}
+\newcommand{\lhphone}[1]{
+  \gdef\@lhphone{#1}
+  \setbox0=\hbox{\@lhphone\unskip}\ifdim\wd0=0pt
+    \@lhphonedefinedfalse
+  \else
+    \@lhphonedefinedtrue
+  \fi
+}
+
 
 \newif\if@lhfaxdefined
 \@lhfaxdefinedfalse
-\newcommand{\lhfax}[1]{\gdef\@lhfax{#1} \@lhfaxdefinedtrue}
+\def\@lhfax{\relax}
+\newcommand{\lhfax}[1]{
+  \gdef\@lhfax{#1}
+  \setbox0=\hbox{\@lhfax\unskip}\ifdim\wd0=0pt
+    \@lhfaxdefinedfalse
+  \else
+    \@lhfaxdefinedtrue
+  \fi
+}
 
 \newif\if@lhemaildefined
 \@lhemaildefinedfalse
-\newcommand{\lhemail}[1]{\gdef\@lhemail{#1} \@lhemaildefinedtrue}
+\def\@lhemail{\relax}
+\newcommand{\lhemail}[1]{
+  \gdef\@lhemail{#1}
+  \setbox0=\hbox{\@lhemail\unskip}\ifdim\wd0=0pt
+    \@lhemaildefinedfalse
+  \else
+    \@lhemaildefinedtrue
+  \fi
+}
 
 \newif\if@lhwwwdefined
 \@lhwwwdefinedfalse
-\newcommand{\lhwww}[1]{\gdef\@lhwww{#1} \@lhwwwdefinedtrue}
+\def\@lhwww{\relax}
+\newcommand{\lhwww}[1]{
+  \gdef\@lhwww{#1}
+  \setbox0=\hbox{\@lhwww\unskip}\ifdim\wd0=0pt
+    \@lhwwwdefinedfalse
+  \else
+    \@lhwwwdefinedtrue
+  \fi
+}
 
 
 \newif\if@fromdefined
@@ -102,7 +160,12 @@
 \par
 \vspace{\parskip}\vspace{\parskip}#1,
 \par
-\vspace{\parskip}\vspace{\parskip}\@lhname
+\vspace{\parskip}\vspace{\parskip}%
+\if@lhnamedefined
+  \@lhname
+\else
+  ~
+\fi
 }
 
 % This command will include a signature image. The absolute path to the signature file must be in the \includegraphics command below.
@@ -110,12 +173,17 @@
 \par
 \vspace{\parskip}\vspace{\parskip}#1,\\
 \includegraphics[width=1.75in]{signature}\\
-\@lhname
+\if@lhnamedefined
+  \@lhname
+\else
+  ~
+\fi
 }
 
 % This is the command to include the letterhead in the document.
 \newcommand{\letterhead}{
 \thispagestyle{plain}
+\begin{wrapfigure}[15]{i}[0pt]{0in}
 \hspace{-1.75in}
 \begin{minipage}[t]{1.7in}
 \vspace{-0.5in}
@@ -133,33 +201,36 @@
   \sf\raggedright \fontsize{9}{10.8}\selectfont
   \if@lhnamedefined
     \textbf{\@lhname\if@lhdegreedefined{, \@lhdegree}\fi}\\
-    \@lhtitle\\
+    \if@lhtitledefined{\@lhtitle\\}\fi
+  \fi
+\if@lhECUaddressdefined
+  \@lhECUaddress ~\\ 
+\fi
+East Carolina University\\ 
+Greenville, NC 27858-4353\\
+USA\\~\\
+\if@lhphonedefined
+  \@lhphone\ office\\
+\fi
+\if@lhfaxdefined
+  \@lhfax\ fax\\~\\
+\fi
+\if@lhemaildefined
+  \@lhemail \\
+\fi
+\if@lhwwwdefined
+  \if@nowww
+    \relax
   \else
-    ~
-  \fi
-  \if@lhECUaddressdefined
-    \@lhECUaddress \\ 
-  \fi
-  East Carolina University\\ 
-  Greenville, NC 27858-4353\\
-  USA\\~\\
-  \if@lhphonedefined
-    \@lhphone\ office\\
-  \fi
-  \if@lhfaxdefined
-    \@lhfax\ fax\\~\\
-  \fi
-  \if@lhemaildefined
-    \@lhemail \\
-  \fi
-  \if@lhwwwdefined
     \@lhwww \\
   \fi
+\fi
 }
 \end{minipage}%
+\end{wrapfigure}
 \normalsize
+~
 \par
-\vspace{-2.07in}
 }
 
 % The command memohead creates a heading for a memorandum.
@@ -171,7 +242,11 @@ FROM: &
 \if@fromdefined
   \@from\\ \\
 \else
-  \@lhname\\ \\
+  \if@lhnamedefined
+    \@lhname\\ \\
+  \else
+    ~\\ \\
+  \fi
 \fi
 DATE: & 
 \if@letterdatedefined
@@ -231,6 +306,6 @@ SUBJECT: & \@subject\\ \\
 
 \raggedright
 
-\usepackage{ECULetterDefs}
-
+\IfFileExists{ECULetterDefs.sty}{\usepackage{ECULetterDefs}}{}
 \endinput
+
