@@ -5,18 +5,25 @@
 
 \newif\if@bw
 \@bwfalse
-
+\newif\if@printletterhead
+\@printletterheadtrue
+\newif\if@printmemohead
+\@printmemoheadfalse
 
 
 \RequirePackage[letterpaper, hmargin={2in,1in}, vmargin=1in]{geometry}
 \RequirePackage{graphicx}
-\RequirePackage{amssymb}
 \RequirePackage{fancyhdr}
 \RequirePackage{lastpage}
 \RequirePackage{wrapfig}
 
 \DeclareOption{bw}{\@bwtrue}
 \DeclareOption{color}{\@bwfalse}
+\DeclareOption{noletterhead}{\@printletterheadfalse}
+\DeclareOption{memo}{\@printmemoheadtrue}
+\DeclareOption{10pt}{\OptionNotUsed}
+\DeclareOption{12pt}{\OptionNotUsed}
+\DeclareOption{twocolumn}{\OptionNotUsed}
 \DeclareOption*{%
       \PassOptionsToClass{\CurrentOption}{article}%
 }
@@ -72,6 +79,7 @@
   \DeclareRobustCommand*{\@lhECUaddress}{#1}
   \@lhECUaddressdefinedtrue
 }
+
 
 \DeclareRobustCommand{\lhECUPostal}{
     East Carolina University\\ 
@@ -129,31 +137,47 @@
 }
 
 
-\newif\if@fromdefined
-\@fromdefinedfalse
+\newif\if@memofromdefined
+\@memofromdefinedfalse
 
-\newif\if@letterdatedefined
-\@letterdatedefinedfalse
+\newif\if@memodatedefined
+\@memodatedefinedfalse
 
 \newif\if@ptwoheaddefined
 \@ptwoheaddefinedfalse
 
-\DeclareRobustCommand*{\@recipient}{} 
-\DeclareRobustCommand*{\recipient}[1]{\DeclareRobustCommand*{\@recipient}{#1}} 
+\DeclareRobustCommand*{\memotitle}{MEMORANDUM}
 
-\DeclareRobustCommand*{\@subject}{} 
-\DeclareRobustCommand*{\subject}[1]{\DeclareRobustCommand*{\@subject}{#1}}
+\DeclareRobustCommand*{\memotolabel}{TO:}
 
-\DeclareRobustCommand*{\@from}{} 
-\DeclareRobustCommand*{\from}[1]{
-  \DeclareRobustCommand*{\@from}{#1} 
-  \@fromdefinedtrue
+\DeclareRobustCommand*{\@memoto}{} 
+\DeclareRobustCommand*{\memoto}[1]{\DeclareRobustCommand*{\@memoto}{#1}} 
+
+\DeclareRobustCommand*{\memosubjlabel}{SUBJECT:}
+
+\DeclareRobustCommand*{\@memosubject}{} 
+\DeclareRobustCommand*{\memosubject}[1]{\DeclareRobustCommand*{\@memosubject}{#1}}
+
+\DeclareRobustCommand*{\memofromlabel}{FROM:}
+
+\DeclareRobustCommand*{\@memofrom}{} 
+\DeclareRobustCommand*{\memofrom}[1]{
+  \DeclareRobustCommand*{\@memofrom}{#1} 
+  \@memofromdefinedtrue
 }
 
-\DeclareRobustCommand*{\@letterdate}{} 
-\DeclareRobustCommand*{\letterdate}[1]{
-  \DeclareRobustCommand*{\@letterdate}{#1} 
-  \@letterdatedefinedtrue
+\DeclareRobustCommand*{\memodatelabel}{DATE:}
+
+\DeclareRobustCommand*{\@memodate}{} 
+\DeclareRobustCommand*{\memodate}[1]{
+  \DeclareRobustCommand*{\@memodate}{#1} 
+  \@memodatedefinedtrue
+}
+
+\DeclareRobustCommand{\UNC}{
+  East Carolina University is a constituent institution of the 
+  University of North Carolina.\\ 
+  An equal opportunity university.
 }
 
 \DeclareRobustCommand*{\@ptwohead}{}
@@ -174,33 +198,52 @@
   \par
 }
 
+\newif\if@closingnamedefined
+\@closingnamedefinedfalse
+\DeclareRobustCommand*{\@closingname}{}
+\DeclareRobustCommand*{\closingname}[1]{
+  \DeclareRobustCommand*{\@closingname}{#1}
+  \@closingnamedefinedtrue
+}
+
 \DeclareRobustCommand{\closing}[1]{
   \par
   \vspace{\parskip}\vspace{\parskip}#1,
   \par
   \vspace{\parskip}\vspace{\parskip}%
-  \if@lhnamedefined
-    \@lhname
+  \if@closingnamedefined
+    \@closingname
   \else
-    ~
+    \if@lhnamedefined
+      \@lhname
+    \else
+      ~
+    \fi
   \fi
 }
 
 % This command will include a signature image. The absolute path to the signature file must be in the \includegraphics command below.
-\DeclareRobustCommand{\closingsig}[1]{
+\newlength{\sigwidth}
+\setlength{\sigwidth}{1.75in}
+
+\DeclareRobustCommand{\closingsig}[2][\sigwidth]{
   \par
-  \vspace{\parskip}\vspace{\parskip}#1,\\
-  \includegraphics[width=1.75in]{signature}\\
-  \if@lhnamedefined
-    \@lhname
+  \vspace{\parskip}\vspace{\parskip}#2,\\
+  \includegraphics[width=#1]{signature}\\
+  \if@closingnamedefined
+    \@closingname
   \else
-    ~
+    \if@lhnamedefined
+      \@lhname
+    \else
+      ~
+    \fi
   \fi
 }
 
 % This is the command to include the letterhead in the document.
 \DeclareRobustCommand{\letterhead}{
-  \thispagestyle{plain}
+  \thispagestyle{lhpage}
   \begin{wrapfigure}[15]{i}[0pt]{0in}
     \hspace{-1.75in}
     \begin{minipage}[t]{1.7in}
@@ -249,11 +292,11 @@
 % The command memohead creates a heading for a memorandum.
 \DeclareRobustCommand{\memohead}{
 \begin{tabular}{l l}
-  \multicolumn{2}{l}{MEMORANDUM}\\ \\
-  TO: & \@recipient\\ \\
-  FROM: & 
-  \if@fromdefined
-    \@from\\ \\
+  \multicolumn{2}{l}{\memotitle}\\ \\
+  \memotolabel & \@memoto\\ \\
+  \memofromlabel & 
+  \if@memofromdefined
+    \@memofrom\\ \\
   \else
     \if@lhnamedefined
       \@lhname\\ \\
@@ -261,13 +304,13 @@
       ~\\ \\
     \fi
   \fi
-  DATE: & 
-  \if@letterdatedefined
-    \@letterdate \\ \\
+  \memodatelabel & 
+  \if@memodatedefined
+    \@memodate \\ \\
   \else
     \today \\ \\
   \fi
-  SUBJECT: & \@subject\\ \\
+  \memosubjlabel & \@memosubject\\ \\
 \end{tabular}
 
 }
@@ -277,12 +320,12 @@
 \parindent = 0.0in
 \footskip = 18.7pt
 
-\fancypagestyle{plain}{%
+\fancypagestyle{lhpage}{%
 \fancyhf{}
 \fancyfoot[L]{\hspace{-1.75in}
 \begin{minipage}{1.7in}
 \raggedright
-\emph{\fontsize{7}{8.4}\selectfont East Carolina University is a constituent institution of the University of North Carolina.\\ An equal opportunity university.\\} 
+\emph{\fontsize{7}{8.4}\selectfont \UNC\\} 
 \end{minipage}
 }
 }
@@ -299,6 +342,18 @@
 
 \DeclareRobustCommand*{\cc}{
   \item[{\rm{cc:}}] 
+}
+
+\DeclareRobustCommand*{\CC}{
+  \item[{\rm{CC:}}] 
+}
+
+\DeclareRobustCommand*{\pc}{
+  \item[{\rm{pc:}}] 
+}
+
+\DeclareRobustCommand*{\PC}{
+  \item[{\rm{PC:}}] 
 }
 
 
@@ -325,6 +380,16 @@
 {%
   \ClassInfo{ECULetter}{User configuration file found.}%
 }
+
+\AtBeginDocument{
+  \if@printletterhead
+    \letterhead
+  \fi
+  \if@printmemohead
+    \memohead
+  \fi
+}
+
 
 \endinput
 
