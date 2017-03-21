@@ -1,24 +1,25 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{ECUletter}%[ECULetter version 0.1 2017-01-17]
+\ProvidesClass{ECULetter}[2017/03/20 ECULetter version 0.1]
+
 \LoadClass[11pt]{article}
 
 \newif\if@bw
 \@bwfalse
-\newif\if@nowww
-\@nowwwfalse
+
+
 
 \RequirePackage[letterpaper, hmargin={2in,1in}, vmargin=1in]{geometry}
 \RequirePackage{graphicx}
 \RequirePackage{amssymb}
 \RequirePackage{fancyhdr}
 \RequirePackage{lastpage}
-\usepackage{calc}
-\usepackage{wrapfig}
+\RequirePackage{wrapfig}
 
 \DeclareOption{bw}{\@bwtrue}
 \DeclareOption{color}{\@bwfalse}
-\DeclareOption{nowww}{\@nowwwtrue}
-%\DeclareOption*{PassOptionsToPackage{\CurrentOption}{geometry}}
+\DeclareOption*{%
+      \PassOptionsToClass{\CurrentOption}{article}%
+}
 \ProcessOptions\relax
 
 \renewcommand{\headrulewidth}{0pt}
@@ -28,9 +29,9 @@
 
 \newif\if@lhnamedefined
 \@lhnamedefinedfalse
-\def\@lhname{\relax}
-\newcommand{\lhname}[1]{
-  \gdef\@lhname{#1}
+\DeclareRobustCommand*{\@lhname}{}
+\DeclareRobustCommand*{\lhname}[1]{
+  \DeclareRobustCommand*{\@lhname}{#1}
   \setbox0=\hbox{\@lhname\unskip}\ifdim\wd0=0pt
     \@lhnamedefinedfalse
   \else
@@ -41,9 +42,9 @@
 
 \newif\if@lhdegreedefined
 \@lhdegreedefinedfalse
-\def\@lhdegree{\relax}
-\newcommand{\lhdegree}[1]{
-  \gdef\@lhdegree{#1}
+\DeclareRobustCommand*{\@lhdegree}{}
+\DeclareRobustCommand*{\lhdegree}[1]{
+  \DeclareRobustCommand*{\@lhdegree}{#1}
   \setbox0=\hbox{\@lhdegree\unskip}\ifdim\wd0=0pt
     \@lhdegreedefinedfalse
   \else
@@ -54,9 +55,9 @@
 
 \newif\if@lhtitledefined
 \@lhtitledefinedfalse
-\def\@lhtitle{\relax}
-\newcommand{\lhtitle}[1]{
-  \gdef\@lhtitle{#1}
+\DeclareRobustCommand*{\@lhtitle}{}
+\DeclareRobustCommand*{\lhtitle}[1]{
+  \DeclareRobustCommand*{\@lhtitle}{#1}
   \setbox0=\hbox{\@lhtitle\unskip}\ifdim\wd0=0pt
     \@lhtitledefinedfalse
   \else
@@ -66,15 +67,23 @@
 
 \newif\if@lhECUaddressdefined
 \@lhECUaddressdefinedfalse
-\def\@lhECUaddress{\relax}
-\newcommand{\lhECUaddress}[1]{\gdef\@lhECUaddress{#1} \@lhECUaddressdefinedtrue}
+\DeclareRobustCommand{\@lhECUaddress}{}
+\DeclareRobustCommand{\lhECUaddress}[1]{
+  \DeclareRobustCommand*{\@lhECUaddress}{#1}
+  \@lhECUaddressdefinedtrue
+}
 
+\DeclareRobustCommand{\lhECUPostal}{
+    East Carolina University\\ 
+    Greenville, NC 27858-4353\\
+    USA
+}
 
 \newif\if@lhphonedefined
 \@lhphonedefinedfalse
-\def\@lhphone{\relax}
-\newcommand{\lhphone}[1]{
-  \gdef\@lhphone{#1}
+\DeclareRobustCommand*{\@lhphone}{}
+\DeclareRobustCommand*{\lhphone}[1]{
+  \DeclareRobustCommand*{\@lhphone}{#1}
   \setbox0=\hbox{\@lhphone\unskip}\ifdim\wd0=0pt
     \@lhphonedefinedfalse
   \else
@@ -85,9 +94,9 @@
 
 \newif\if@lhfaxdefined
 \@lhfaxdefinedfalse
-\def\@lhfax{\relax}
-\newcommand{\lhfax}[1]{
-  \gdef\@lhfax{#1}
+\DeclareRobustCommand*{\@lhfax}{}
+\DeclareRobustCommand*{\lhfax}[1]{
+  \DeclareRobustCommand*{\@lhfax}{#1}
   \setbox0=\hbox{\@lhfax\unskip}\ifdim\wd0=0pt
     \@lhfaxdefinedfalse
   \else
@@ -97,9 +106,9 @@
 
 \newif\if@lhemaildefined
 \@lhemaildefinedfalse
-\def\@lhemail{\relax}
-\newcommand{\lhemail}[1]{
-  \gdef\@lhemail{#1}
+\DeclareRobustCommand*{\@lhemail}{}
+\DeclareRobustCommand*{\lhemail}[1]{
+  \DeclareRobustCommand*{\@lhemail}{#1}
   \setbox0=\hbox{\@lhemail\unskip}\ifdim\wd0=0pt
     \@lhemaildefinedfalse
   \else
@@ -109,9 +118,9 @@
 
 \newif\if@lhwwwdefined
 \@lhwwwdefinedfalse
-\def\@lhwww{\relax}
-\newcommand{\lhwww}[1]{
-  \gdef\@lhwww{#1}
+\DeclareRobustCommand*{\@lhwww}{}
+\DeclareRobustCommand*{\lhwww}[1]{
+  \DeclareRobustCommand*{\@lhwww}{#1}
   \setbox0=\hbox{\@lhwww\unskip}\ifdim\wd0=0pt
     \@lhwwwdefinedfalse
   \else
@@ -129,132 +138,136 @@
 \newif\if@ptwoheaddefined
 \@ptwoheaddefinedfalse
 
-\def\@recipient{\relax} 
-\newcommand{\recipient}[1]{\gdef\@recipient{#1}} 
+\DeclareRobustCommand*{\@recipient}{} 
+\DeclareRobustCommand*{\recipient}[1]{\DeclareRobustCommand*{\@recipient}{#1}} 
 
-\def\@subject{\relax} 
-\newcommand{\subject}[1]{\gdef\@subject{#1}}
+\DeclareRobustCommand*{\@subject}{} 
+\DeclareRobustCommand*{\subject}[1]{\DeclareRobustCommand*{\@subject}{#1}}
 
-\def\@from{\relax} 
-\newcommand{\from}[1]{\gdef\@from{#1} \@fromdefinedtrue}
-
-\def\@letterdate{\relax} 
-\newcommand{\letterdate}[1]{\gdef\@letterdate{#1} \@letterdatedefinedtrue}
-
-\def\@ptwohead{\relax}
-\newcommand{\ptwohead}[1]{\gdef\@ptwohead{#1} \@ptwoheaddefinedtrue}
-
-
-\newcommand{\iaddress}[1]{
-\par
-#1
-\par
-}
-\newcommand{\greeting}[1]{
-\par
-#1
-\par
+\DeclareRobustCommand*{\@from}{} 
+\DeclareRobustCommand*{\from}[1]{
+  \DeclareRobustCommand*{\@from}{#1} 
+  \@fromdefinedtrue
 }
 
-\newcommand{\closing}[1]{
-\par
-\vspace{\parskip}\vspace{\parskip}#1,
-\par
-\vspace{\parskip}\vspace{\parskip}%
-\if@lhnamedefined
-  \@lhname
-\else
-  ~
-\fi
+\DeclareRobustCommand*{\@letterdate}{} 
+\DeclareRobustCommand*{\letterdate}[1]{
+  \DeclareRobustCommand*{\@letterdate}{#1} 
+  \@letterdatedefinedtrue
+}
+
+\DeclareRobustCommand*{\@ptwohead}{}
+\DeclareRobustCommand*{\ptwohead}[1]{
+  \DeclareRobustCommand*{\@ptwohead}{#1}
+  \@ptwoheaddefinedtrue
+}
+
+
+\DeclareRobustCommand{\iaddress}[1]{
+  \par
+  #1
+  \par
+}
+\DeclareRobustCommand{\greeting}[1]{
+  \par
+  #1
+  \par
+}
+
+\DeclareRobustCommand{\closing}[1]{
+  \par
+  \vspace{\parskip}\vspace{\parskip}#1,
+  \par
+  \vspace{\parskip}\vspace{\parskip}%
+  \if@lhnamedefined
+    \@lhname
+  \else
+    ~
+  \fi
 }
 
 % This command will include a signature image. The absolute path to the signature file must be in the \includegraphics command below.
-\newcommand{\closingsig}[1]{
-\par
-\vspace{\parskip}\vspace{\parskip}#1,\\
-\includegraphics[width=1.75in]{signature}\\
-\if@lhnamedefined
-  \@lhname
-\else
-  ~
-\fi
+\DeclareRobustCommand{\closingsig}[1]{
+  \par
+  \vspace{\parskip}\vspace{\parskip}#1,\\
+  \includegraphics[width=1.75in]{signature}\\
+  \if@lhnamedefined
+    \@lhname
+  \else
+    ~
+  \fi
 }
 
 % This is the command to include the letterhead in the document.
-\newcommand{\letterhead}{
-\thispagestyle{plain}
-\begin{wrapfigure}[15]{i}[0pt]{0in}
-\hspace{-1.75in}
-\begin{minipage}[t]{1.7in}
-\vspace{-0.5in}
-\if@bw
-% The B&W ECU logo file is in the \includegraphics command below. This file must 
-% be somewhere in the latex file path. 
-% (Test with the command $ kpsewhich filename.pdf.)
-  \includegraphics[width=4.75in]{ECULogoBW}\\ \\
-\else
-% The ECU logo file is in the \includegraphics command below. This file must be % be somewhere in the latex file path. 
-% (Test with the command $ kpsewhich filename.pdf.)
-  \includegraphics[width=4.75in]{ECULogo}\\ \\
-\fi
-{%
-  \sf\raggedright \fontsize{9}{10.8}\selectfont
-  \if@lhnamedefined
-    \textbf{\@lhname\if@lhdegreedefined{, \@lhdegree}\fi}\\
-    \if@lhtitledefined{\@lhtitle\\}\fi
-  \fi
-\if@lhECUaddressdefined
-  \@lhECUaddress ~\\ 
-\fi
-East Carolina University\\ 
-Greenville, NC 27858-4353\\
-USA\\~\\
-\if@lhphonedefined
-  \@lhphone\ office\\
-\fi
-\if@lhfaxdefined
-  \@lhfax\ fax\\~\\
-\fi
-\if@lhemaildefined
-  \@lhemail \\
-\fi
-\if@lhwwwdefined
-  \if@nowww
-    \relax
-  \else
-    \@lhwww \\
-  \fi
-\fi
-}
-\end{minipage}%
-\end{wrapfigure}
-\normalsize
-~
-\par
+\DeclareRobustCommand{\letterhead}{
+  \thispagestyle{plain}
+  \begin{wrapfigure}[15]{i}[0pt]{0in}
+    \hspace{-1.75in}
+    \begin{minipage}[t]{1.7in}
+      \vspace{-0.5in}
+      \if@bw
+        % The B&W ECU logo file is in the \includegraphics command below. This 
+        % file must be somewhere in the latex file path.
+        % (Test with the command $ kpsewhich filename.pdf.)
+        \includegraphics[width=4.75in]{ECULogoBW}\\ \\
+      \else
+        % The ECU logo file is in the \includegraphics command below. This file 
+        % must be somewhere in the latex file path. 
+        % (Test with the command $ kpsewhich filename.pdf.)
+        \includegraphics[width=4.75in]{ECULogo}\\ \\
+      \fi
+      {%
+        \sf\raggedright \fontsize{9}{10.8}\selectfont
+        \if@lhnamedefined
+          \textbf{\@lhname\if@lhdegreedefined{, \@lhdegree}\fi}\\
+          \if@lhtitledefined{\@lhtitle\\}\fi
+        \fi
+      \if@lhECUaddressdefined
+        \@lhECUaddress ~\\ 
+      \fi
+      \lhECUPostal\\~\\
+      \if@lhphonedefined
+        \@lhphone\ office\\
+      \fi
+      \if@lhfaxdefined
+        \@lhfax\ fax\\~\\
+      \fi
+      \if@lhemaildefined
+        \@lhemail \\
+      \fi
+      \if@lhwwwdefined
+        \@lhwww \\
+      \fi
+      }
+    \end{minipage}%
+  \end{wrapfigure}
+  \normalsize
+  ~
+  \par
 }
 
 % The command memohead creates a heading for a memorandum.
-\newcommand{\memohead}{
+\DeclareRobustCommand{\memohead}{
 \begin{tabular}{l l}
-\multicolumn{2}{l}{MEMORANDUM}\\ \\
-TO: & \@recipient\\ \\
-FROM: & 
-\if@fromdefined
-  \@from\\ \\
-\else
-  \if@lhnamedefined
-    \@lhname\\ \\
+  \multicolumn{2}{l}{MEMORANDUM}\\ \\
+  TO: & \@recipient\\ \\
+  FROM: & 
+  \if@fromdefined
+    \@from\\ \\
   \else
-    ~\\ \\
+    \if@lhnamedefined
+      \@lhname\\ \\
+    \else
+      ~\\ \\
+    \fi
   \fi
-\fi
-DATE: & 
-\if@letterdatedefined
-  \@letterdate \\ \\
-\else
-  \today \\ \\
-\fi
-SUBJECT: & \@subject\\ \\
+  DATE: & 
+  \if@letterdatedefined
+    \@letterdate \\ \\
+  \else
+    \today \\ \\
+  \fi
+  SUBJECT: & \@subject\\ \\
 \end{tabular}
 
 }
@@ -262,7 +275,7 @@ SUBJECT: & \@subject\\ \\
 \headsep = 0.25in
 \parskip = 2ex
 \parindent = 0.0in
-\footskip = 18pt
+\footskip = 18.7pt
 
 \fancypagestyle{plain}{%
 \fancyhf{}
@@ -276,16 +289,16 @@ SUBJECT: & \@subject\\ \\
 
 \newenvironment{afterclose}{\begin{description}}{\end{description}}
 
-\newcommand{\ps}{
-\item[{\rm{P.S.}}] 
+\DeclareRobustCommand*{\ps}{
+  \item[{\rm{P.S.}}] 
 }
 
-\newcommand{\encl}{
-\item[{\rm{encl:}}] 
+\DeclareRobustCommand*{\encl}{
+  \item[{\rm{encl:}}] 
 }
 
-\newcommand{\cc}{
-\item[{\rm{cc:}}] 
+\DeclareRobustCommand*{\cc}{
+  \item[{\rm{cc:}}] 
 }
 
 
@@ -306,6 +319,12 @@ SUBJECT: & \@subject\\ \\
 
 \raggedright
 
-\IfFileExists{ECULetterDefs.sty}{\usepackage{ECULetterDefs}}{}
+\InputIfFileExists{ECULetterDefs.cfg}{%
+  \ClassInfo{ECULetter}{Loading user configurations from ECULetterDefs.cfg}%
+}%
+{%
+  \ClassInfo{ECULetter}{User configuration file found.}%
+}
+
 \endinput
 
