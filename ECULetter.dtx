@@ -1,0 +1,939 @@
+% \iffalse meta-comment
+%
+%
+% Copyright (C) 2017 by Mark W. Sprague
+%
+% This file may be distributed and/or modified under the conditions of
+% the LaTeX Project Public License, either version 1.3 of this license
+% or (at your option) any later version. The latest version of this
+% license is in:
+%
+% http://www.latex-project.org/lppl.txt
+%
+% and version 1.3 or later is part of all distributions of LaTeX version
+% 2005/12/01 or later.
+%
+% \fi
+% \iffalse
+%<class>\NeedsTeXFormat{LaTeX2e}[2005/12/01]
+%<class>\ProvidesClass{ECULetter}
+%<*class>
+    [2017/03/21 v0.1 ECU letterhead with letter and memo formatting]
+%</class>
+%
+%<*driver>
+\documentclass{ltxdoc}
+\EnableCrossrefs
+\CodelineIndex
+\RecordChanges
+\begin{document}
+  \DocInput{ECULetter.dtx}
+\end{document}
+%</driver>
+% \fi
+%
+% \CheckSum{0}
+%
+% \CharacterTable
+%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
+%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
+%   Digits        \0\1\2\3\4\5\6\7\8\9
+%   Exclamation   \!     Double quote  \"     Hash (number) \#
+%   Dollar        \$     Percent       \%     Ampersand     \&
+%   Acute accent  \'     Left paren    \(     Right paren   \)
+%   Asterisk      \*     Plus          \+     Comma         \,
+%   Minus         \-     Point         \.     Solidus       \/
+%   Colon         \:     Semicolon     \;     Less than     \<
+%   Equals        \=     Greater than  \>     Question mark \?
+%   Commercial at \@     Left bracket  \[     Backslash     \\
+%   Right bracket \]     Circumflex    \^     Underscore    \_
+%   Grave accent  \`     Left brace    \{     Vertical bar  \|
+%   Right brace   \}     Tilde         \~}
+%
+%
+% \changes{v0.1}{2017/03/21}{Initial version}
+%
+% \GetFileInfo{ECULetter.dtx}
+%
+% \DoNotIndex{\newcommand,\newenvironment,\newif,\if,\else,\fi}
+% \DoNotIndex{\setbox,\hbox,unskip,\ifdim,\wd}
+% \DoNotIndex{\par,\vspace,\parskip}
+%
+% \title{The \textsf{ECULetter} class\thanks{This document
+%   corresponds to \textsf{ECULetter}~\fileversion, dated \filedate.}}
+% \author{Mark W. Sprague \\ \texttt{spraguem@ecu.edu}}
+%
+% \maketitle
+%
+% \section{Introduction}
+%
+% The \textsf{ECULetter} class formats the document on official-looking
+% ECU letterhead.  It also provides macros to format letters and memos
+% on the letterhead.  User settings can be included in a file
+% ECULetterDefs.cfg in the \latex path.
+%
+% \section{Usage}
+%
+% \subsection{Class Declaration}
+% The \textsf{ECULetter} class can be called with the following options:
+% \begin{description}
+%     \item[bw] Use black and white graphics for the letterhead.
+%     \item[color] Use color graphics for the letterhead (set by 
+%                  default).
+%     \item[memo] Write the memo header to the first page.
+%     \item[noletterhead] Do not write the letterhead to the first page.
+% \end{description}
+%
+% All other options are passed to the \textsf{article} class
+% (\emph{n.b.}, not the letter class), upon which this class is based. 
+% The \textsf{article} class options |10pt|, |12pt|, and |twocolumn| are
+% not compatible with \textsf{ECULetter} and are silently ignored.
+%
+% \subsection{Required Packages}
+%
+% The \textsf{ECULetter} class loads the packages |geometry|,
+% |graphicx|, |fancyhdr|, |lastpage|, and |wrapfig|. Commands from each
+% of these packages may be used in the document.  Use the |\geometry|
+% command from the |geometry| package to adjust the document layout and
+% paper size (which defaults to |letterpaper|).
+%
+% \subsection{Required Graphics Files}
+%
+% The \textsf{ECULetter} class requires three graphics files to be
+% placed within the \latex (|graphicx|) path: |ECULogo| (color ECU
+% logo), |ECULogoBW| (black and white ECU logo), and |signature|
+% (signature image).  These files may be in any format accessible to the
+% |graphicx| package (with the appropriate extensions) and the files in
+% the \latex path may be symlinks.
+%
+%\subsection{Letterhead Content}
+%
+% The letterhead content is set with commands that begin with
+% |\lh|\dots.  Omitting any of these definitions or defining it as empty
+% (|{}|) or whitespace-only (|{  }|) results in that item being omitted
+% from the letterhead.  The letterhead content is usually defined in the
+% configuration file ECULetterDefs.cfg or in the document preamble.
+%
+% \DescribeMacro{\lhname}
+% The author's name on the letterhead is set with
+% \begin{quote}
+%     |\lhname| \marg{Author Name}
+% \end{quote}
+% where |Author Name| is the name as it appears at the top of the letterhead.  Remember to use a backslash (|\|) after periods following initials to prevent end-of-sentence spacing (for example, |John H.\ Doe|).
+%
+% \DescribeMacro{\lhdegree}
+% The author's degree on the letterhead is set with
+% \begin{quote}
+%     |\lhdegree| \marg{Deg}
+% \end{quote}
+% where |Deg| is the degree abbreviation as it appears after the
+% author's name on the letterhead.  The degree is only written to the
+% letterhead if |\lhname| is defined.
+%
+% \DescribeMacro{\lhtitle}
+% The author's title on the letterhead is set with
+% \begin{quote}
+%     |\lhtitle| \marg{Title}
+% \end{quote}
+% where |Title| is the title (\emph{e.g.} Associate Professor) on the
+% letterhead.  The title is only written to the letterhead if |\lhname|
+% is defined.
+% 
+% \DescribeMacro{\lhECUaddress}
+% The department address on the letterhead is set with
+% \begin{quote}
+%     |\lhECUaddress| \marg{address}
+% \end{quote}
+% where |address| is the campus portion of the address on the
+% letterhead.  The |address| can contain formatting and line breaks. 
+% The |address| field can be used to format a departmental letterhead
+% (with |\lhname| left undefined).
+% 
+% \DescribeMacro{\lhECUPostal}
+% The macro |\ECUPostal| gives the portion of the postal address after
+% the departmental address.  This macro is defined as 
+% \begin{quote}
+%     East Carolina University\\
+%     Greenville, NC 27858-4353\\
+%     USA
+% \end{quote}
+% and can be redefined with |\renewcommand|\marg{\lhECUPostal}\marg{New
+% Address}.
+% 
+% \DescribeMacro{\lhphone}
+% The telephone number on the letterhead is set with
+% \begin{quote}
+%     |\lhphone| \marg{xxx-xxx-xxxx}
+% \end{quote}
+% where |xxx-xxx-xxxx| is the telephone number. Note that it can be
+% formatted in as desired, \emph{e.g.} |(xxx) xxx-xxxx| or
+% |xxx.xxx.xxxx|.
+% 
+% \DescribeMacro{\lhfax}
+% The fax number on the letterhead is set with
+% \begin{quote}
+%     |\lhfax| \marg{xxx-xxx-xxxx}
+% \end{quote}
+% where |xxx-xxx-xxxx| is the fax number. Note that it can be formatted
+% in as desired, \emph{e.g.} |(xxx) xxx-xxxx| or |xxx.xxx.xxxx|.
+% 
+% \DescribeMacro{\lhemail}
+% The E-mail address on the letterhead is set with
+% \begin{quote}
+%     |\lhemail| \marg{pirateid@ecu.edu}
+% \end{quote}
+% where |pirateid@ecu.edu| is the E-mail address.
+% 
+% \DescribeMacro{\lhwww}
+% The web page URL on the letterhead is set with
+% \begin{quote}
+%     |\lhwww| \marg{ecuurl.ecu.edu}
+% \end{quote}
+% where |ecuurl.ecu.edu| is the URL as it appears on the letterhead.
+% 
+% \subsection{Memo Header Content}
+% 
+% If the document is a memo, these commands, usually included in the
+% document preamble, format the memo header.
+% 
+% \DescribeMacro{\memotitle}
+% The macro |\memotitle| gives the label MEMORANDUM at the top of the
+% memo header and can be redefined with
+% |\renewcommand| \marg{\memotitle} \marg{newtitle}.
+% 
+% The TO, FROM, DATE, and SUBJECT listings in the header are formatted
+% using a |tabular| environment with the labels on the left and the
+% appropriate fields on the right.
+% 
+% \DescribeMacro{\memotolabel}
+% The macro |\memotolabel| gives the label TO: in the memo header and
+% can be redefined with
+% |\renewcommand|\marg{\memotolabel}\marg{newlabel}.
+% 
+% \DescribeMacro{\memoto}
+% The recipient of the memo is defined with
+% \begin{quote}
+%     |\memoto| \marg{therecipient}
+% \end{quote}
+% where |therecipient| is the name listed in the TO-field of the memo
+% header (TO: therecipient). Note that a second line (for example the
+% recipient's title) can be included by specifying 
+% \begin{quote}
+%     |\memoto| \marg{therecipient \\\\ \& line 2}
+% \end{quote}
+% 
+% \DescribeMacro{\memofromlabel}
+% The macro |\memofromlabel| gives the label FROM: in the memo header
+% and can be redefined with
+% |\renewcommand|\marg{\memofromlabel}\marg{newlabel}.
+% 
+% \DescribeMacro{\memofrom}
+% The sender of the memo is defined with
+% \begin{quote}
+%     |\memofrom| \marg{thesender}
+% \end{quote}
+% where |thesender| is the name listed in the FROM-field of the memo
+% header (FROM: thesender). Note that a second line (for example the
+% sender's title) can be included by specifying 
+% \begin{quote}
+%     |\memofrom| \marg{thesender \\\\ \& line 2}
+% \end{quote}
+% If |\memofrom| is not specified in the document, it defaults to the
+% author's name on the letterhead as specified by |\lhname|.
+% 
+% \DescribeMacro{\memodatelabel}
+% The macro |\memodatelabel| gives the label DATE: in the memo header
+% and can be redefined with
+% |\renewcommand|\marg{\memodatelabel}\marg{datelabel}.
+% 
+% \DescribeMacro{\memodate}
+% The date of the memo is defined with
+% \begin{quote}
+%     |\memodate| \marg{date}
+% \end{quote}
+% where |date| is date to be used in in the DATE-field of the memo
+% header (DATE: date). If |\memodate| is not supplied, it is replaced by
+% |\today|.
+% 
+% \DescribeMacro{\memosubjlabel}
+% The macro |\memosubjlabel| gives the label SUBJECT: in the memo header
+% and can be redefined with
+% |\renewcommand|\marg{\memosubjlabel}\marg{subjectlabel}.
+% 
+% \DescribeMacro{\memosubject}
+% The subject of the memo is defined with
+% \begin{quote}
+%     |\memosubject| \marg{subject text}
+% \end{quote}
+% where |subject text| is used in in the SUBJECT-field of the memo
+% header (SUBJECT: subject text). Normally the |subject text| would fit
+% in a one-line, regular-width table file.  A second line for the
+% subject text can be included by specifying 
+% \begin{quote}
+%     |\memosubject| \marg{subject text \\\\ \& line 2}
+% \end{quote}
+% Another possibility to extend the subject text is to place it inside a
+% |minipage| environment.
+% 
+% \subsection{Other Formatting}
+% These preamble commands format other parts of the letter.
+% 
+% \DescribeMacro{\UNC}
+% The footer statement about ECU being a member of the UNC System and
+% the Equal Opportunity statement are defined with |\UNC|, which
+% defaults to
+% \begin{quote}
+%     East Carolina University is a constituent institution of the
+%     University of North Carolina.\\ 
+%     An equal opportunity university.
+% \end{quote}
+% This can be redefined with |\renewcommand|\marg{\UNC}\marg{New
+% statement}.
+% 
+% \DescribeMacro{\ptwohead}
+% An optional header included after the first page is defined with
+% \begin{quote}
+%     |\ptwohead| \marg{header text}
+% \end{quote}
+% If |\ptwohead| is not supplied, it defaults to the author's name on
+% the letterhead as specified by |\lhname|.
+% 
+% \subsection{Letter commands in the main document}
+% These commands are used in the body of the document to format the
+% letter.
+% 
+% \DescribeMacro{\letterhead}
+% The letterhead is written to the document using the content defined in
+% the preamble with |\letterhead|. The |\letterhead| command should be
+% the first thing written on the page.  The letterhead is written to the
+% first page of the document by default, unless the |noletterhead| class
+% option is given. The |\letterhead| command allows the letterhead to be
+% written to other pages (\emph{e.g.}, when the file contains multiple
+% letters).
+% 
+% \DescribeMacro{\memohead}
+% The memo header is written to the document using the content defined
+% in the preamble with |\memohead|. The memo header is written to the
+% first page when the |memo| class option is given.  The |\memohead|
+% command allows the memo header to be written to other pages.
+% 
+% \DescribeMacro{\iaddress}
+% The inside address of the letter is included with
+% \begin{quote}
+%     |\iaddress| \marg{address\\\\of\\\\recipient}
+% \end{quote}
+% This is usually the first command given in the body of the letter (but
+% not for a memo) after the |\letterhrad| command.  The inside address
+% is usually followed with the date, either using |\today| or the
+% appropriate date text.
+% 
+% \DescribeMacro{\greeting}
+% The greeting in the letter is included with
+% \begin{quote}
+%     |\greeting| \marg{greeting text}
+% \end{quote}
+% For example, |\greeting| \marg{Dear Jane:} would format the greeting
+% text ``Dear Jane:'' on the left margin of the letter.  The |\greeting|
+% command usually follows the date.
+% 
+% \DescribeMacro{\closing}
+% \DescribeMarcro{\closingsig}
+% \DescribeMarcro{\closingname}
+% The closing of the letter is given by |\closing| \marg{closing text}
+% for a closing statement with name below and space for a handwritten
+% signature.  The command |\closingsig| \oarg{sigwidth} \marg{closing
+% text} inserts the graphic in the file |signature| into the signature
+% space between the closing text and the closing name.  The optional
+% argument |siggwidth| sets the width of the signature graphic with
+% default value |1.75in|.  The file |signature| may be in any format
+% accessible to the |graphicx| package.  The default name used below the
+% closing is the letterhead name specified by |\lhname|, but it can be
+% set with |\closingname| \marg{closing name}.  The |closing name| may
+% include formatting commands and line breaks (for titles, \emph{etc.}).
+% 
+% \DescribeEnvironment{afterclose}
+% \DescribeMacro{\ps}
+% \DescribeMacro{\encl}
+% \DescribeMacro{\cc}
+% \DescribeMacro{\CC}
+% \DescribeMacro{\pc}
+% \DescribeMacro{\PC}
+% The |afterclose| environment allows the letter postscript (P.S.),
+% enclosure, and carbon copy statements .  The command |\ps| will format
+% a postscript statement (P.S.) and format the text following it to have
+% a hanging indent.  The command |\encl| will format an enclosure
+% statement with the list of enclosed documents following the command. 
+% A short enclosure list can be separated by commas, or a longer list
+% can be separated by linebreaks.  The command |\cc| will format the
+% carbon copy statement ``cc:'' and format the text following it to have
+% a hanging indent.  Alternate copy statements |\CC| (for ``CC:''),
+% |\pc| (for ``pc:''), and |\PC| (for ``PC:'') are also defined.  The
+% |afterclose| environment is based on the \latex |description|
+% environment, so additional items can easily be provided with |\item|
+% \optarg{label:}.
+%
+% \subsection{User Definitions}
+%
+% The class reads user definitions from the file |ECULetterDefs.cfg|
+% placed within the \latex path.  Definitions in this file may be
+% overridden on an \emph{ad-hoc} basis with commands in the document
+% preamble.  Examples of useful user definitions include letterhead
+% content definition commands so frequently-used values to not have to
+% be specified in each document.
+% 
+% \section{Implementation}
+%
+% \StopEventually{\PrintChanges\PrintIndex}
+% 
+% The \textsf{ECULetter} class is based on the \textsf{article} class,
+% not the \textsf{letter} class.
+%    \begin{macrocode}
+\LoadClass[11pt]{article}
+%    \end{macrocode}
+%
+% Define boolean parameters to implement class options.
+%    \begin{macrocode}
+\newif\if@bw
+\@bwfalse
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+\newif\if@printletterhead
+\@printletterheadtrue
+%    \end{macrocode}
+%    \begin{macrocode}
+\newif\if@printmemohead
+\@printmemoheadfalse
+%    \end{macrocode}
+%
+% Load required packages.
+%    \begin{macrocode}
+\RequirePackage[letterpaper, hmargin={2in,1in}, vmargin=1in]{geometry}
+\RequirePackage{graphicx}
+\RequirePackage{fancyhdr}
+\RequirePackage{lastpage}
+\RequirePackage{wrapfig}
+%    \end{macrocode}
+%
+% Declare options
+%    \begin{macrocode}
+\DeclareOption{bw}{\@bwtrue}
+\DeclareOption{color}{\@bwfalse}
+\DeclareOption{noletterhead}{\@printletterheadfalse}
+\DeclareOption{memo}{\@printmemoheadtrue}
+%    \end{macrocode}
+%
+% Declare confliction \textsf{article} class options as |\OptionNotUsed|.
+%    \begin{macrocode}
+\DeclareOption{10pt}{\OptionNotUsed}
+\DeclareOption{12pt}{\OptionNotUsed}
+\DeclareOption{twocolumn}{\OptionNotUsed}
+%    \end{macrocode}
+%
+% Pass all undefined options to the \textsf{article} class.
+%    \begin{macrocode}
+\DeclareOption*{%
+      \PassOptionsToClass{\CurrentOption}{article}%
+%    \end{macrocode}
+%
+% Process options.
+%    \begin{macrocode}
+}
+\ProcessOptions\relax
+%    \end{macrocode}
+%
+% No headrule or footrule.
+%    \begin{macrocode}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+%    \end{macrocode}
+%
+% Take care of letterhead definitions.  Most commands have a boolean
+% |\if@commanddefined| and a value holder |\@command|.
+%
+%    \begin{macrocode}
+\newif\if@lhnamedefined
+\@lhnamedefinedfalse
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+\DeclareRobustCommand*{\@lhname}{}
+\DeclareRobustCommand*{\lhname}[1]{
+  \DeclareRobustCommand*{\@lhname}{#1}%
+%    \end{macrocode}
+% The following command |\setbox|\dots strips whitespace and declares
+% the command undefined if nothing is left. It will cause an error ir
+% there are any |\\| in the value (use |linebreak| instead).
+%    \begin{macrocode}
+  \setbox0=\hbox{\@lhname\unskip}\ifdim\wd0=0pt
+    \@lhnamedefinedfalse
+  \else
+    \@lhnamedefinedtrue
+  \fi
+}
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+\newif\if@lhdegreedefined
+\@lhdegreedefinedfalse
+%    \end{macrocode}
+%    \begin{macrocode}
+\DeclareRobustCommand*{\@lhdegree}{}
+\DeclareRobustCommand*{\lhdegree}[1]{
+  \DeclareRobustCommand*{\@lhdegree}{#1}
+  \setbox0=\hbox{\@lhdegree\unskip}\ifdim\wd0=0pt
+    \@lhdegreedefinedfalse
+  \else
+    \@lhdegreedefinedtrue
+  \fi
+}
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+\newif\if@lhtitledefined
+\@lhtitledefinedfalse
+%    \end{macrocode}
+%    \begin{macrocode}
+\DeclareRobustCommand*{\@lhtitle}{}
+\DeclareRobustCommand*{\lhtitle}[1]{
+  \DeclareRobustCommand*{\@lhtitle}{#1}
+  \setbox0=\hbox{\@lhtitle\unskip}\ifdim\wd0=0pt
+    \@lhtitledefinedfalse
+  \else
+    \@lhtitledefinedtrue
+  \fi
+}
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+\newif\if@lhECUaddressdefined
+\@lhECUaddressdefinedfalse
+%    \end{macrocode}
+%    \begin{macrocode}
+\DeclareRobustCommand{\@lhECUaddress}{}
+\DeclareRobustCommand{\lhECUaddress}[1]{
+  \DeclareRobustCommand*{\@lhECUaddress}{#1}
+  \@lhECUaddressdefinedtrue
+}
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+\DeclareRobustCommand{\lhECUPostal}{
+    East Carolina University\\ 
+    Greenville, NC 27858-4353\\
+    USA
+}
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+\newif\if@lhphonedefined
+\@lhphonedefinedfalse
+%    \end{macrocode}
+%    \begin{macrocode}
+\DeclareRobustCommand*{\@lhphone}{}
+\DeclareRobustCommand*{\lhphone}[1]{
+  \DeclareRobustCommand*{\@lhphone}{#1}
+  \setbox0=\hbox{\@lhphone\unskip}\ifdim\wd0=0pt
+    \@lhphonedefinedfalse
+  \else
+    \@lhphonedefinedtrue
+  \fi
+}
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+\newif\if@lhfaxdefined
+\@lhfaxdefinedfalse
+%    \end{macrocode}
+%    \begin{macrocode}
+\DeclareRobustCommand*{\@lhfax}{}
+\DeclareRobustCommand*{\lhfax}[1]{
+  \DeclareRobustCommand*{\@lhfax}{#1}
+  \setbox0=\hbox{\@lhfax\unskip}\ifdim\wd0=0pt
+    \@lhfaxdefinedfalse
+  \else
+    \@lhfaxdefinedtrue
+  \fi
+}
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+\newif\if@lhemaildefined
+\@lhemaildefinedfalse
+%    \begin{macrocode}
+%    \end{macrocode}
+\DeclareRobustCommand*{\@lhemail}{}
+\DeclareRobustCommand*{\lhemail}[1]{
+  \DeclareRobustCommand*{\@lhemail}{#1}
+  \setbox0=\hbox{\@lhemail\unskip}\ifdim\wd0=0pt
+    \@lhemaildefinedfalse
+  \else
+    \@lhemaildefinedtrue
+  \fi
+}
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+\newif\if@lhwwwdefined
+\@lhwwwdefinedfalse
+%    \end{macrocode}
+%    \begin{macrocode}
+\DeclareRobustCommand*{\@lhwww}{}
+\DeclareRobustCommand*{\lhwww}[1]{
+  \DeclareRobustCommand*{\@lhwww}{#1}
+  \setbox0=\hbox{\@lhwww\unskip}\ifdim\wd0=0pt
+    \@lhwwwdefinedfalse
+  \else
+    \@lhwwwdefinedtrue
+  \fi
+}
+%    \end{macrocode}
+%
+% Declare memo commands
+%
+%    \begin{macrocode}
+\DeclareRobustCommand*{\memotitle}{MEMORANDUM}
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+\DeclareRobustCommand*{\memotolabel}{TO:}
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+\DeclareRobustCommand*{\@memoto}{} 
+\DeclareRobustCommand*{\memoto}[1]{\DeclareRobustCommand*{\@memoto}{#1}} 
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+\newif\if@memofromdefined
+\@memofromdefinedfalse
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+\DeclareRobustCommand*{\memofromlabel}{FROM:}
+%    \end{macrocode}
+%
+\DeclareRobustCommand*{\@memofrom}{} 
+\DeclareRobustCommand*{\memofrom}[1]{
+  \DeclareRobustCommand*{\@memofrom}{#1} 
+  \@memofromdefinedtrue
+}
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+\DeclareRobustCommand*{\memosubjlabel}{SUBJECT:}
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+\DeclareRobustCommand*{\@memosubject}{} 
+\DeclareRobustCommand*{\memosubject}[1]{\DeclareRobustCommand*{\@memosubject}{#1}}
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+\newif\if@memodatedefined
+\@memodatedefinedfalse
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+\DeclareRobustCommand*{\memodatelabel}{DATE:}
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+\DeclareRobustCommand*{\@memodate}{} 
+\DeclareRobustCommand*{\memodate}[1]{
+  \DeclareRobustCommand*{\@memodate}{#1} 
+  \@memodatedefinedtrue
+}
+%    \end{macrocode}
+%
+% Declare other formatting commands.
+%
+%    \begin{macrocode}
+\newif\if@ptwoheaddefined
+\@ptwoheaddefinedfalse
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+\DeclareRobustCommand*{\@ptwohead}{}
+\DeclareRobustCommand*{\ptwohead}[1]{
+  \DeclareRobustCommand*{\@ptwohead}{#1}
+  \@ptwoheaddefinedtrue
+}
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+\DeclareRobustCommand{\UNC}{
+  East Carolina University is a constituent institution of the 
+  University of North Carolina.\\ 
+  An equal opportunity university.
+}
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+\DeclareRobustCommand{\iaddress}[1]{
+  \par
+  #1
+  \par
+}
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+\DeclareRobustCommand{\greeting}[1]{
+  \par
+  #1
+  \par
+}
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+\newif\if@closingnamedefined
+\@closingnamedefinedfalse
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+\DeclareRobustCommand*{\@closingname}{}
+\DeclareRobustCommand*{\closingname}[1]{
+  \DeclareRobustCommand*{\@closingname}{#1}
+  \@closingnamedefinedtrue
+}
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+\DeclareRobustCommand{\closing}[1]{
+  \par
+  \vspace{\parskip}\vspace{\parskip}#1,
+  \par
+  \vspace{\parskip}\vspace{\parskip}%
+  \if@closingnamedefined
+    \@closingname
+  \else
+    \if@lhnamedefined
+      \@lhname
+    \else
+      ~
+    \fi
+  \fi
+}
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+\newlength{\sigwidth}
+\setlength{\sigwidth}{1.75in}
+%    \end{macrocode}
+%
+% \begin{macro}{\closingsig}
+% This command will include a signature image in the file |signature|.
+\DeclareRobustCommand{\closingsig}[2][\sigwidth]{
+  \par
+  \vspace{\parskip}\vspace{\parskip}#2,\\
+  \includegraphics[width=#1]{signature}\\
+  \if@closingnamedefined
+    \@closingname
+  \else
+    \if@lhnamedefined
+      \@lhname
+    \else
+      ~
+    \fi
+  \fi
+}
+\end{macro}
+%
+%\begin{macro}{\letterhead}
+% This is the command to include the letterhead in the document.
+%    \begin{macrocode}
+\DeclareRobustCommand{\letterhead}{
+  \thispagestyle{lhpage}
+  \begin{wrapfigure}[15]{i}[0pt]{0in}
+    \hspace{-1.75in}
+    \begin{minipage}[t]{1.7in}
+      \vspace{-0.5in}
+      \if@bw
+%    \end{macrocode}
+% The B&W ECU logo file is in the \includegraphics command below. This
+% file must be somewhere in the latex file path. 
+% (Test with the terminal command |$ kpsewhich filename.pdf|.)
+%    \begin{macrocode}
+        \includegraphics[width=4.75in]{ECULogoBW}\\ \\
+      \else
+%    \end{macrocode}
+% The ECU logo file is in the \includegraphics command below. This file
+% must be somewhere in the latex file path. 
+% (Test with the terminal command |$ kpsewhich filename.pdf|.)
+%    \begin{macrocode}
+        \includegraphics[width=4.75in]{ECULogo}\\ \\
+      \fi
+      {%
+        \sf\raggedright \fontsize{9}{10.8}\selectfont
+        \if@lhnamedefined
+          \textbf{\@lhname\if@lhdegreedefined{, \@lhdegree}\fi}\\
+          \if@lhtitledefined{\@lhtitle\\}\fi
+        \fi
+      \if@lhECUaddressdefined
+        \@lhECUaddress ~\\ 
+      \fi
+      \lhECUPostal\\~\\
+      \if@lhphonedefined
+        \@lhphone\ office\\
+      \fi
+      \if@lhfaxdefined
+        \@lhfax\ fax\\~\\
+      \fi
+      \if@lhemaildefined
+        \@lhemail \\
+      \fi
+      \if@lhwwwdefined
+        \@lhwww \\
+      \fi
+      }
+    \end{minipage}%
+  \end{wrapfigure}
+  \normalsize
+  ~
+  \par
+}
+%    \end{macrocode}
+% \end{macro}
+%
+% \begin{macro}{\memohead}
+% The command memohead creates a heading for a memorandum.
+%    \begin{macrocode}
+\DeclareRobustCommand{\memohead}{
+\begin{tabular}{l l}
+  \multicolumn{2}{l}{\memotitle}\\ \\
+  \memotolabel & \@memoto\\ \\
+  \memofromlabel & 
+  \if@memofromdefined
+    \@memofrom\\ \\
+  \else
+    \if@lhnamedefined
+      \@lhname\\ \\
+    \else
+      ~\\ \\
+    \fi
+  \fi
+  \memodatelabel & 
+  \if@memodatedefined
+    \@memodate \\ \\
+  \else
+    \today \\ \\
+  \fi
+  \memosubjlabel & \@memosubject\\ \\
+\end{tabular}
+}
+%    \end{macrocode}
+% \end{macro}
+%
+% The following length definitions are necessary.
+%    \begin{macrocode}
+\headsep = 0.25in
+\parskip = 2ex
+\parindent = 0.0in
+\footskip = 18.7pt
+%    \end{macrocode}
+%
+% Format the first page headers and footers.
+%    \begin{macrocode}
+\fancypagestyle{lhpage}{%
+  \fancyhf{}
+  \fancyfoot[L]{\hspace{-1.75in}
+    \begin{minipage}{1.7in}
+      \raggedright
+      \emph{\fontsize{7}{8.4}\selectfont \UNC\\} 
+    \end{minipage}
+  }%
+}%
+%    \end{macrocode}
+%
+% \begin{environment}{afterclose}
+% Define the |afterclose| environment.
+%    \begin{macrocode}
+\newenvironment{afterclose}{\begin{description}}{\end{description}}
+%    \end{macrocode}
+% \end{environment}
+%
+% Define the |afterclose| items.
+%    \begin{macrocode}
+\DeclareRobustCommand*{\ps}{
+  \item[{\rm{P.S.}}] 
+}
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+\DeclareRobustCommand*{\encl}{
+  \item[{\rm{encl:}}] 
+}
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+\DeclareRobustCommand*{\cc}{
+  \item[{\rm{cc:}}] 
+}
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+\DeclareRobustCommand*{\CC}{
+  \item[{\rm{CC:}}] 
+}
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+\DeclareRobustCommand*{\pc}{
+  \item[{\rm{pc:}}] 
+}
+%    \end{macrocode}
+%
+%    \begin{macrocode}
+\DeclareRobustCommand*{\PC}{
+  \item[{\rm{PC:}}] 
+}
+%    \end{macrocode}
+%
+% Set the page style for pages following the first page.
+%    \begin{macrocode}
+\pagestyle{fancy}
+\lhead{
+  \if@ptwoheaddefined 
+    \@ptwohead
+  \else
+    \@lhname
+  \fi
+}
+\chead{}
+\rhead{Page \thepage\ of \pageref{LastPage}}
+\lfoot{}
+\cfoot{}
+\rfoot{}
+%    \end{macrocode}
+%
+% Set the main text to be |\raggedright|
+%    \begin{macrocode}
+\raggedright
+%    \end{macrocode}
+%
+% Read user defined commands from the file |ECULetterDefs.cfg| if it
+% exists.
+%    \begin{macrocode}
+\InputIfFileExists{ECULetterDefs.cfg}{%
+  \ClassInfo{ECULetter}{Loading user configurations from ECULetterDefs.cfg}%
+}%
+{%
+  \ClassInfo{ECULetter}{User configuration file found.}%
+}
+%    \end{macrocode}
+%
+% Include |\letterhead| and |\memohead| at the beginning of the document
+% if appropriate.
+%    \begin{macrocode}
+\AtBeginDocument{
+  \if@printletterhead
+    \letterhead
+  \fi
+  \if@printmemohead
+    \memohead
+  \fi
+}
+%    \end{macrocode}
+%
+% \Finale
+\endinput
