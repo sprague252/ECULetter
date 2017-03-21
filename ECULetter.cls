@@ -1,22 +1,39 @@
-\NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{ECULetter}[2017/03/20 ECULetter version 0.1]
-
+%%
+%% This is file `ECULetter.cls',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% ECULetter.dtx  (with options: `class')
+%% This is a generated file.
+%% 
+%% Copyright (C) 2017 by Mark W. Sprague <spraguem@ecu.edu>
+%% 
+%% This file may be distributed and/or modified under the conditions of the
+%% LaTeX Project Public License, either version 1.3 of this license or (at
+%% your option) any later version.  The latest version of this license is
+%% in:
+%% 
+%%     http://www.latex-project.org/lppl.txt
+%% 
+%% and version 1.3 or later is part of all distributions of LaTeX version
+%% 2005/12/01 or later.
+%% 
+\NeedsTeXFormat{LaTeX2e}[2005/12/01]
+\ProvidesClass{ECULetter}
+[2017/03/21 v0.1 ECU letterhead with letter and memo formatting]
 \LoadClass[11pt]{article}
-
 \newif\if@bw
 \@bwfalse
 \newif\if@printletterhead
 \@printletterheadtrue
 \newif\if@printmemohead
 \@printmemoheadfalse
-
-
 \RequirePackage[letterpaper, hmargin={2in,1in}, vmargin=1in]{geometry}
 \RequirePackage{graphicx}
 \RequirePackage{fancyhdr}
 \RequirePackage{lastpage}
 \RequirePackage{wrapfig}
-
 \DeclareOption{bw}{\@bwtrue}
 \DeclareOption{color}{\@bwfalse}
 \DeclareOption{noletterhead}{\@printletterheadfalse}
@@ -28,25 +45,19 @@
       \PassOptionsToClass{\CurrentOption}{article}%
 }
 \ProcessOptions\relax
-
 \renewcommand{\headrulewidth}{0pt}
 \renewcommand{\footrulewidth}{0pt}
-
-% Take care of author definitions.
-
 \newif\if@lhnamedefined
 \@lhnamedefinedfalse
 \DeclareRobustCommand*{\@lhname}{}
 \DeclareRobustCommand*{\lhname}[1]{
-  \DeclareRobustCommand*{\@lhname}{#1}
+  \DeclareRobustCommand*{\@lhname}{#1}%
   \setbox0=\hbox{\@lhname\unskip}\ifdim\wd0=0pt
     \@lhnamedefinedfalse
   \else
     \@lhnamedefinedtrue
   \fi
 }
-
-
 \newif\if@lhdegreedefined
 \@lhdegreedefinedfalse
 \DeclareRobustCommand*{\@lhdegree}{}
@@ -58,8 +69,6 @@
     \@lhdegreedefinedtrue
   \fi
 }
-
-
 \newif\if@lhtitledefined
 \@lhtitledefinedfalse
 \DeclareRobustCommand*{\@lhtitle}{}
@@ -71,7 +80,6 @@
     \@lhtitledefinedtrue
   \fi
 }
-
 \newif\if@lhECUaddressdefined
 \@lhECUaddressdefinedfalse
 \DeclareRobustCommand{\@lhECUaddress}{}
@@ -79,14 +87,11 @@
   \DeclareRobustCommand*{\@lhECUaddress}{#1}
   \@lhECUaddressdefinedtrue
 }
-
-
 \DeclareRobustCommand{\lhECUPostal}{
-    East Carolina University\\ 
+    East Carolina University\\
     Greenville, NC 27858-4353\\
     USA
 }
-
 \newif\if@lhphonedefined
 \@lhphonedefinedfalse
 \DeclareRobustCommand*{\@lhphone}{}
@@ -98,8 +103,6 @@
     \@lhphonedefinedtrue
   \fi
 }
-
-
 \newif\if@lhfaxdefined
 \@lhfaxdefinedfalse
 \DeclareRobustCommand*{\@lhfax}{}
@@ -111,7 +114,6 @@
     \@lhfaxdefinedtrue
   \fi
 }
-
 \newif\if@lhemaildefined
 \@lhemaildefinedfalse
 \DeclareRobustCommand*{\@lhemail}{}
@@ -123,7 +125,6 @@
     \@lhemaildefinedtrue
   \fi
 }
-
 \newif\if@lhwwwdefined
 \@lhwwwdefinedfalse
 \DeclareRobustCommand*{\@lhwww}{}
@@ -135,58 +136,41 @@
     \@lhwwwdefinedtrue
   \fi
 }
-
-
+\DeclareRobustCommand*{\memotitle}{MEMORANDUM}
+\DeclareRobustCommand*{\memotolabel}{TO:}
+\DeclareRobustCommand*{\@memoto}{}
+\DeclareRobustCommand*{\memoto}[1]{\DeclareRobustCommand*{\@memoto}{#1}}
 \newif\if@memofromdefined
 \@memofromdefinedfalse
-
-\newif\if@memodatedefined
-\@memodatedefinedfalse
-
-\newif\if@ptwoheaddefined
-\@ptwoheaddefinedfalse
-
-\DeclareRobustCommand*{\memotitle}{MEMORANDUM}
-
-\DeclareRobustCommand*{\memotolabel}{TO:}
-
-\DeclareRobustCommand*{\@memoto}{} 
-\DeclareRobustCommand*{\memoto}[1]{\DeclareRobustCommand*{\@memoto}{#1}} 
-
-\DeclareRobustCommand*{\memosubjlabel}{SUBJECT:}
-
-\DeclareRobustCommand*{\@memosubject}{} 
-\DeclareRobustCommand*{\memosubject}[1]{\DeclareRobustCommand*{\@memosubject}{#1}}
-
 \DeclareRobustCommand*{\memofromlabel}{FROM:}
-
-\DeclareRobustCommand*{\@memofrom}{} 
+\DeclareRobustCommand*{\@memofrom}{}
 \DeclareRobustCommand*{\memofrom}[1]{
-  \DeclareRobustCommand*{\@memofrom}{#1} 
+  \DeclareRobustCommand*{\@memofrom}{#1}
   \@memofromdefinedtrue
 }
-
+\DeclareRobustCommand*{\memosubjlabel}{SUBJECT:}
+\DeclareRobustCommand*{\@memosubject}{}
+\DeclareRobustCommand*{\memosubject}[1]{\DeclareRobustCommand*{\@memosubject}{#1}}
+\newif\if@memodatedefined
+\@memodatedefinedfalse
 \DeclareRobustCommand*{\memodatelabel}{DATE:}
-
-\DeclareRobustCommand*{\@memodate}{} 
+\DeclareRobustCommand*{\@memodate}{}
 \DeclareRobustCommand*{\memodate}[1]{
-  \DeclareRobustCommand*{\@memodate}{#1} 
+  \DeclareRobustCommand*{\@memodate}{#1}
   \@memodatedefinedtrue
 }
-
-\DeclareRobustCommand{\UNC}{
-  East Carolina University is a constituent institution of the 
-  University of North Carolina.\\ 
-  An equal opportunity university.
-}
-
+\newif\if@ptwoheaddefined
+\@ptwoheaddefinedfalse
 \DeclareRobustCommand*{\@ptwohead}{}
 \DeclareRobustCommand*{\ptwohead}[1]{
   \DeclareRobustCommand*{\@ptwohead}{#1}
   \@ptwoheaddefinedtrue
 }
-
-
+\DeclareRobustCommand{\UNC}{
+  East Carolina University is a constituent institution of the
+  University of North Carolina.\\
+  An equal opportunity university.
+}
 \DeclareRobustCommand{\iaddress}[1]{
   \par
   #1
@@ -197,7 +181,6 @@
   #1
   \par
 }
-
 \newif\if@closingnamedefined
 \@closingnamedefinedfalse
 \DeclareRobustCommand*{\@closingname}{}
@@ -205,7 +188,6 @@
   \DeclareRobustCommand*{\@closingname}{#1}
   \@closingnamedefinedtrue
 }
-
 \DeclareRobustCommand{\closing}[1]{
   \par
   \vspace{\parskip}\vspace{\parskip}#1,
@@ -221,11 +203,8 @@
     \fi
   \fi
 }
-
-% This command will include a signature image. The absolute path to the signature file must be in the \includegraphics command below.
 \newlength{\sigwidth}
 \setlength{\sigwidth}{1.75in}
-
 \DeclareRobustCommand{\closingsig}[2][\sigwidth]{
   \par
   \vspace{\parskip}\vspace{\parskip}#2,\\
@@ -240,8 +219,6 @@
     \fi
   \fi
 }
-
-% This is the command to include the letterhead in the document.
 \DeclareRobustCommand{\letterhead}{
   \thispagestyle{lhpage}
   \begin{wrapfigure}[15]{i}[0pt]{0in}
@@ -249,14 +226,8 @@
     \begin{minipage}[t]{1.7in}
       \vspace{-0.5in}
       \if@bw
-        % The B&W ECU logo file is in the \includegraphics command below. This 
-        % file must be somewhere in the latex file path.
-        % (Test with the command $ kpsewhich filename.pdf.)
         \includegraphics[width=4.75in]{ECULogoBW}\\ \\
       \else
-        % The ECU logo file is in the \includegraphics command below. This file 
-        % must be somewhere in the latex file path. 
-        % (Test with the command $ kpsewhich filename.pdf.)
         \includegraphics[width=4.75in]{ECULogo}\\ \\
       \fi
       {%
@@ -266,7 +237,7 @@
           \if@lhtitledefined{\@lhtitle\\}\fi
         \fi
       \if@lhECUaddressdefined
-        \@lhECUaddress ~\\ 
+        \@lhECUaddress ~\\
       \fi
       \lhECUPostal\\~\\
       \if@lhphonedefined
@@ -288,13 +259,11 @@
   ~
   \par
 }
-
-% The command memohead creates a heading for a memorandum.
 \DeclareRobustCommand{\memohead}{
 \begin{tabular}{l l}
   \multicolumn{2}{l}{\memotitle}\\ \\
   \memotolabel & \@memoto\\ \\
-  \memofromlabel & 
+  \memofromlabel &
   \if@memofromdefined
     \@memofrom\\ \\
   \else
@@ -304,7 +273,7 @@
       ~\\ \\
     \fi
   \fi
-  \memodatelabel & 
+  \memodatelabel &
   \if@memodatedefined
     \@memodate \\ \\
   \else
@@ -312,55 +281,42 @@
   \fi
   \memosubjlabel & \@memosubject\\ \\
 \end{tabular}
-
 }
-
 \headsep = 0.25in
 \parskip = 2ex
 \parindent = 0.0in
 \footskip = 18.7pt
-
 \fancypagestyle{lhpage}{%
-\fancyhf{}
-\fancyfoot[L]{\hspace{-1.75in}
-\begin{minipage}{1.7in}
-\raggedright
-\emph{\fontsize{7}{8.4}\selectfont \UNC\\} 
-\end{minipage}
-}
-}
-
+  \fancyhf{}
+  \fancyfoot[L]{\hspace{-1.75in}
+    \begin{minipage}{1.7in}
+      \raggedright
+      \emph{\fontsize{7}{8.4}\selectfont \UNC\\}
+    \end{minipage}
+  }%
+}%
 \newenvironment{afterclose}{\begin{description}}{\end{description}}
-
 \DeclareRobustCommand*{\ps}{
-  \item[{\rm{P.S.}}] 
+  \item[{\rm{P.S.}}]
 }
-
 \DeclareRobustCommand*{\encl}{
-  \item[{\rm{encl:}}] 
+  \item[{\rm{encl:}}]
 }
-
 \DeclareRobustCommand*{\cc}{
-  \item[{\rm{cc:}}] 
+  \item[{\rm{cc:}}]
 }
-
 \DeclareRobustCommand*{\CC}{
-  \item[{\rm{CC:}}] 
+  \item[{\rm{CC:}}]
 }
-
 \DeclareRobustCommand*{\pc}{
-  \item[{\rm{pc:}}] 
+  \item[{\rm{pc:}}]
 }
-
 \DeclareRobustCommand*{\PC}{
-  \item[{\rm{PC:}}] 
+  \item[{\rm{PC:}}]
 }
-
-
 \pagestyle{fancy}
-
 \lhead{
-  \if@ptwoheaddefined 
+  \if@ptwoheaddefined
     \@ptwohead
   \else
     \@lhname
@@ -371,16 +327,13 @@
 \lfoot{}
 \cfoot{}
 \rfoot{}
-
 \raggedright
-
 \InputIfFileExists{ECULetterDefs.cfg}{%
   \ClassInfo{ECULetter}{Loading user configurations from ECULetterDefs.cfg}%
 }%
 {%
   \ClassInfo{ECULetter}{User configuration file found.}%
 }
-
 \AtBeginDocument{
   \if@printletterhead
     \letterhead
@@ -389,7 +342,6 @@
     \memohead
   \fi
 }
-
-
 \endinput
-
+%%
+%% End of file `ECULetter.cls'.
