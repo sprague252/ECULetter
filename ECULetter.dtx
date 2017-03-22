@@ -74,18 +74,23 @@
 % The \textsf{ECULetter} class formats the document on official-looking
 % ECU letterhead.  It also provides macros to format letters and memos
 % on the letterhead.  User settings can be included in a file
-% ECULetterDefs.cfg in the \LaTeX path.
+% ECULetterDefs.cfg in the latex path.
 %
 % \section{Usage}
 %
 % \subsection{Class Declaration}
-% The \textsf{ECULetter} class can be called with the following options:
+%
+% The class declaration statement is
+% \begin{quote}
+% |\documentclass|\oarg{options}|{ECULetter}|
+% \end{quote}
+% The following options are valid:
 % \begin{description}
-%     \item[bw] Use black and white graphics for the letterhead.
-%     \item[color] Use color graphics for the letterhead (set by 
+%     \item[|bw|] Use black and white graphics for the letterhead.
+%     \item[|color|] Use color graphics for the letterhead (set by 
 %                  default).
-%     \item[memo] Write the memo header to the first page.
-%     \item[noletterhead] Do not write the letterhead to the first page.
+%     \item[|memo|] Write the memo header to the first page.
+%     \item[|noletterhead|] Do not write the letterhead to the first page.
 % \end{description}
 %
 % All other options are passed to the \textsf{article} class
@@ -104,11 +109,11 @@
 % \subsection{Required Graphics Files}
 %
 % The \textsf{ECULetter} class requires three graphics files to be
-% placed within the \LaTeX\ (|graphicx|) path: |ECULogo| (color ECU
+% placed within the latex (|graphicx|) path: |ECULogo| (color ECU
 % logo), |ECULogoBW| (black and white ECU logo), and |signature|
 % (signature image).  These files may be in any format accessible to the
 % |graphicx| package (with the appropriate extensions) and the files in
-% the \LaTeX\ path may be symlinks.
+% the latex path may be symlinks.
 %
 %\subsection{Letterhead Content}
 %
@@ -142,7 +147,7 @@
 % where $\langle$\emph{Title}$\rangle$ is the title (\emph{e.g.} Associate Professor) on the
 % letterhead.  The title is only written to the letterhead if |\lhname|
 % is defined.
-% 
+%
 % \DescribeMacro{\lhECUaddress}
 % The department address on the letterhead is set with
 % \begin{quote}
@@ -152,7 +157,7 @@
 % letterhead.  The $\langle$\emph{address}$\rangle$ can contain formatting and line breaks. 
 % The $\langle$\emph{address}$\rangle$ field can be used to format a departmental letterhead
 % (with |\lhname| left undefined).
-% 
+%
 % \DescribeMacro{\lhECUPostal}
 % The macro |\ECUPostal| gives the portion of the postal address after
 % the departmental address.  This macro is defined as 
@@ -163,7 +168,7 @@
 % \end{quote}
 % and can be redefined with %
 % |\renewcommand{\lhECUPostal}|\marg{New Address}.
-% 
+%
 % \DescribeMacro{\lhphone}
 % The telephone number on the letterhead is set with
 % \begin{quote}
@@ -171,7 +176,7 @@
 % \end{quote}
 % where $\langle$\emph{xxx-xxx-xxxx}$\rangle$ is the telephone number. Note that it can be
 % formatted in as desired, \emph{e.g.} (123) 456-7890 or 123.456.7890.
-% 
+%
 % \DescribeMacro{\lhfax}
 % The fax number on the letterhead is set with
 % \begin{quote}
@@ -179,40 +184,40 @@
 % \end{quote}
 % where $\langle$\emph{xxx-xxx-xxxx}$\rangle$ is the fax number. Note that it can be formatted
 % in as desired, \emph{e.g.} (123) 456-7890 or 123.456.7890.
-% 
+%
 % \DescribeMacro{\lhemail}
 % The E-mail address on the letterhead is set with
 % \begin{quote}
 %     |\lhemail| \marg{pirateid@ecu.edu}
 % \end{quote}
 % where $\langle$\emph{pirateid@ecu.edu}$\rangle$ is the E-mail address.
-% 
+%
 % \DescribeMacro{\lhwww}
 % The web page URL on the letterhead is set with
 % \begin{quote}
 %     |\lhwww| \marg{ecuurl.ecu.edu}
 % \end{quote}
 % where $\langle$\emph{ecuurl.ecu.edu}$\rangle$ is the URL as should appear on the letterhead.
-% 
+%
 % \subsection{Memo Header Content}
-% 
+%
 % If the document is a memo, these commands, usually included in the
 % document preamble, format the memo header.
-% 
+%
 % \DescribeMacro{\memotitle}
 % The macro |\memotitle| gives the label MEMORANDUM at the top of the
 % memo header and can be redefined with
 % |\renewcommand{\memotitle}|\marg{newtitle}.
-% 
+%
 % The TO, FROM, DATE, and SUBJECT listings in the header are formatted
 % using a |tabular| environment with the labels on the left and the
 % appropriate fields on the right.
-% 
+%
 % \DescribeMacro{\memotolabel}
 % The macro |\memotolabel| gives the label TO: in the memo header and
 % can be redefined with
 % |\renewcommand{\memotolabel}|\marg{newlabel}.
-% 
+%
 % \DescribeMacro{\memoto}
 % The recipient of the memo is defined with
 % \begin{quote}
@@ -225,12 +230,12 @@
 %     |\memoto{|$\langle$\emph{therecipient}$\rangle$ |\\ &| %
 %          $\langle$\emph{line 2}$\rangle$|}|
 % \end{quote}
-% 
+%
 % \DescribeMacro{\memofromlabel}
 % The macro |\memofromlabel| gives the label FROM: in the memo header
 % and can be redefined with
 % |\renewcommand{\memofromlabel}|\marg{newlabel}.
-% 
+%
 % \DescribeMacro{\memofrom}
 % The sender of the memo is defined with
 % \begin{quote}
@@ -245,12 +250,12 @@
 % \end{quote}
 % If |\memofrom| is not specified in the document, it defaults to the
 % author's name on the letterhead as specified by |\lhname|.
-% 
+%
 % \DescribeMacro{\memodatelabel}
 % The macro |\memodatelabel| gives the label DATE: in the memo header
 % and can be redefined with
 % |\renewcommand{\memodatelabel}|\marg{datelabel}.
-% 
+%
 % \DescribeMacro{\memodate}
 % The date of the memo is defined with
 % \begin{quote}
@@ -259,12 +264,12 @@
 % where $\langle$\emph{date}$\rangle$ is date to be used in in the DATE-field of the memo
 % header (DATE: date). If |\memodate| is not supplied, it is replaced by
 % |\today|.
-% 
+%
 % \DescribeMacro{\memosubjlabel}
 % The macro |\memosubjlabel| gives the label SUBJECT: in the memo header
 % and can be redefined with
 % |\renewcommand{\memosubjlabel}|\marg{subjectlabel}.
-% 
+%
 % \DescribeMacro{\memosubject}
 % The subject of the memo is defined with
 % \begin{quote}
@@ -280,10 +285,10 @@
 % \end{quote}
 % Another possibility to extend the subject text is to place it inside a
 % |minipage| environment.
-% 
+%
 % \subsection{Other Formatting}
 % These preamble commands format other parts of the letter.
-% 
+%
 % \DescribeMacro{\UNC}
 % The footer statement about ECU being a member of the UNC System and
 % the Equal Opportunity statement are defined with |\UNC|, which
@@ -295,7 +300,7 @@
 % \end{quote}
 % This can be redefined with 
 %  |\renewcommand{\UNC}|\marg{New statement}.
-% 
+%
 % \DescribeMacro{\ptwohead}
 % An optional header included after the first page is defined with
 % \begin{quote}
@@ -303,11 +308,11 @@
 % \end{quote}
 % If |\ptwohead| is not supplied, it defaults to the author's name on
 % the letterhead as specified by |\lhname|.
-% 
+%
 % \subsection{Letter commands in the main document}
 % These commands are used in the body of the document to format the
 % letter.
-% 
+%
 % \DescribeMacro{\letterhead}
 % The letterhead is written to the document using the content defined in
 % the preamble with |\letterhead|. The |\letterhead| command should be
@@ -316,13 +321,13 @@
 % option is given. The |\letterhead| command allows the letterhead to be
 % written to other pages (\emph{e.g.}, when the file contains multiple
 % letters).
-% 
+%
 % \DescribeMacro{\memohead}
 % The memo header is written to the document using the content defined
 % in the preamble with |\memohead|. The memo header is written to the
 % first page when the |memo| class option is given.  The |\memohead|
 % command allows the memo header to be written to other pages.
-% 
+%
 % \DescribeMacro{\iaddress}
 % The inside address of the letter is included with
 % \begin{quote}
@@ -332,7 +337,7 @@
 % not for a memo) after the |\letterhrad| command.  The inside address
 % is usually followed with the date, either using |\today| or the
 % appropriate date text.
-% 
+%
 % \DescribeMacro{\greeting}
 % The greeting in the letter is included with
 % \begin{quote}
@@ -341,7 +346,7 @@
 % For example, |\greeting{|Dear Jane:|}| would format the greeting
 % text ``Dear Jane:'' on the left margin of the letter.  The |\greeting|
 % command usually follows the date.
-% 
+%
 % \DescribeMacro{\closing}
 % \DescribeMacro{\closingsig}
 % \DescribeMacro{\closingname}
@@ -356,7 +361,7 @@
 % closing is the letterhead name specified by |\lhname|, but it can be
 % set with |\closingname| \marg{closing name}.  The $\langle$\emph{closing name}$\rangle$
 %  may include formatting commands and line breaks (for titles, \emph{etc.}).
-% 
+%
 % \DescribeEnv{afterclose}
 % \DescribeMacro{\ps}
 % \DescribeMacro{\encl}
@@ -374,26 +379,151 @@
 % carbon copy statement ``cc:'' and format the text following it to have
 % a hanging indent.  Alternate copy statements |\CC| (for ``CC:''),
 % |\pc| (for ``pc:''), and |\PC| (for ``PC:'') are also defined.  The
-% |afterclose| environment is based on the \LaTeX |description|
+% |afterclose| environment is based on the latex |description|
 % environment, so additional items can easily be provided with 
 % |\item[|$\langle$\emph{label:}$\rangle$|]|.
 %
 % \subsection{User Definitions}
 %
 % The class reads user definitions from the file |ECULetterDefs.cfg|
-% placed within the \LaTeX path.  Definitions in this file may be
+% placed within the latex path.  Definitions in this file may be
 % overridden on an \emph{ad-hoc} basis with commands in the document
 % preamble.  Examples of useful user definitions include letterhead
 % content definition commands so frequently-used values to not have to
 % be specified in each document.
-% 
+%
+% \section{Sample Files}
+%
+% This section includes sample files for use with the \textsf{ECULetter}
+% class.  The first sample file is a configuration file for storing
+% default user settings.  The second sample file is a document template
+% for a letter.  The third sample file is a document template for a memo.
+%
+% \subsection{Sample User Configuration File}
+%
+% \begin{verbatim}
+% % This is a sample user configuration file for use with the ECULetter
+% % class.  Save this file with name ECULetterDefs.cfg, and save it
+% % somewhere in the latex path.  The ECULetter class reads this file and
+% % executes the commands within it at the end.  Add commands to define
+% % letterhead parameters for the user.  Omit a command to leave the
+% % parameter undefined, leaving it off of the letterhead.
+% %
+% % First define the name on the letterhead.
+% \lhname{John Q.\ Doe}
+% %
+% % Define the degree: Ph.D., M.D., Ed.D., etc.
+% \lhdegree{Ph.D.}
+% %
+% % Define the title: Professor, Head Honcho, etc. 
+% \lhtitle{Associate Professor} 
+% %
+% % Define the departmental/campus address.
+% \lhECUaddress{Department of PhysicsMail Stop 563} 
+% %
+% % Define the telephone number. You can use different formats for the
+% % number if desired. 
+% \lhphone{252-867-5309}
+% %
+% % Define the fax number. Again, use the desired telephone number format.
+% \lhfax{252-328-6314} 
+% %
+% % Define the E-mail address. 
+% \lhemail{piratep@ecu.edu}
+% %
+% % Define the web page.
+% \lhwww{myweb.ecu.edu/piratep}
+% \end{verbatim}
+%
+% \subsection{Sample Document Template for Letter}
+%
+% \begin{verbatim}
+% % This is a sample document template for a memo using the ECULetter class.
+% \documentclass[ ]{ECULetter}
+%
+% \begin{document}
+% \today
+%
+% % Insert inside address in brackets below.  Include linebreaks (\\).
+% \iaddress{Address\\ of\\ Recipient} 
+%
+% % Insert the complete greeting with name and punctuation in brackets
+% % below.
+% \greeting{Dear Recipient:} 
+%
+% % Begin body of the letter below.
+%
+%
+% % The following creates the closing. Include the closing text in the
+% % brackets. Use \closing to sign by hand and \closingsig to use the
+% % scanned signature in the file signature.pdf (stored in the latex path).
+%
+% \closing{Sincerely}
+%
+% % \closingsig{Sincerely}
+%
+% % Uncomment commands below to include afterclose items.
+% % \begin{afterclose}
+% %
+% % \ps 
+% %
+% % \cc 
+% %
+% % \encl 
+% %
+% % \end{afterclose}
+%
+% \end{document}
+% \end{verbatim}
+%
+% \subsection{Sample Document Template for Memo}
+%
+% \begin{verbatim}
+% % This is a sample document template for a memo using the ECULetter class.
+% \documentclass[memo]{ECULetter}
+%
+% % Define memo parameters.
+% \memoto{Patricia T.\ Pirate} 
+% % Include a two-line version with the following:
+% % \memoto{Patricia T.\ Pirate, Chair\\ & Tailgating Committee}
+%
+% % The following defines the FROM field. Omit it to use the letterhead
+% % name instead.
+% \memofrom{P.\ D.\ the Pirate}
+% % Include a two-line version with the following command.
+% % \memofrom{P.\ D.\ the Pirate, Chair\\ & Trebuchet Committee}
+%
+% \memosubject{Saturday Activities}
+%
+% % The following defines the DATE field. Use any date format desired.
+% % Omit the command to use \today.
+% \memodate{October 31, 2017}
+%
+% \begin{document}
+% %Begin body of the memo below.
+%
+%
+% % Uncomment commands below to include afterclose items.
+% % \begin{afterclose}
+%
+% % \ps
+%
+% % \cc 
+%
+% % \encl
+%
+% % \end{afterclose}
+%
+% \end{document}
+% \end{verbatim}
+%
 % \section{Implementation}
 %
 % \StopEventually{^^A
 %    \PrintChanges
 %    \PrintIndex
 % }
-% 
+%
 % The \textsf{ECULetter} class is based on the \textsf{article} class,
 % not the \textsf{letter} class.
 %    \begin{macrocode}
@@ -763,14 +893,14 @@
       \if@bw
 %    \end{macrocode}
 % The black and white ECU logo file is in the |\includegraphics| command below. 
-% This file must be somewhere in the latex file path. 
+% This file must be somewhere in the latex path. 
 % (Test with the terminal command |$ kpsewhich filename.pdf|.)
 %    \begin{macrocode}
         \includegraphics[width=4.75in]{ECULogoBW}\\ \\
       \else
 %    \end{macrocode}
 % The ECU logo file is in the |\includegraphics| command below. This file
-% must be somewhere in the latex file path. 
+% must be somewhere in the latex path. 
 % (Test with the terminal command |$ kpsewhich filename.pdf|.)
 %    \begin{macrocode}
         \includegraphics[width=4.75in]{ECULogo}\\ \\
