@@ -21,7 +21,7 @@
 %% 
 \NeedsTeXFormat{LaTeX2e}[2005/12/01]
 \ProvidesClass{ECULetter}
-[2017/03/21 v0.1 ECU letterhead with letter and memo formatting]
+[2017/03/21 v1.0 ECU letterhead with letter and memo formatting]
 \LoadClass[11pt]{article}
 \newif\if@bw
 \@bwfalse
