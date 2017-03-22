@@ -21,11 +21,12 @@
 %<class>\NeedsTeXFormat{LaTeX2e}[2005/12/01]
 %<class>\ProvidesClass{ECULetter}
 %<*class>    
-[2017/03/21 v0.1 ECU letterhead with letter and memo formatting]
+[2017/03/21 v1.0 ECU letterhead with letter and memo formatting]
 %</class>
 %
 %<*driver>
 \documentclass{ltxdoc}
+\usepackage{hypdoc}
 \EnableCrossrefs
 \CodelineIndex
 \RecordChanges
@@ -35,7 +36,7 @@
 %</driver>
 % \fi
 %
-% \CheckSum{0}
+% \CheckSum{509}
 %
 % \CharacterTable
 %  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -54,7 +55,9 @@
 %   Right brace   \}     Tilde         \~}
 %
 %
-% \changes{v0.1}{2017/03/21}{Initial version}
+% \newcommand{\hyperit}[1]{\textit{\hyperpage{#1}}}
+%
+% \changes{v1.0}{2017/03/21}{Initial version}
 %
 % \GetFileInfo{ECULetter.dtx}
 %
@@ -69,28 +72,43 @@
 %
 % \maketitle
 %
+% \begin{abstract}
+% The \textsf{ECULetter} class provides a personalized ECU letterhead in
+% a LaTeX environment. It also includes commands for elements of letters
+% and memoranda written on the letterhead.
+% \end{abstract}
+%
+% \tableofcontents
+%
+% \newpage
+%
 % \section{Introduction}
 %
 % The \textsf{ECULetter} class formats the document on official-looking
 % ECU letterhead.  It also provides macros to format letters and memos
 % on the letterhead.  User settings can be included in a file
-% ECULetterDefs.cfg in the latex path.
+% \index{ECULetterDefs.cfg file|hyperit} ECULetterDefs.cfg in the
+% latex path.
 %
 % \section{Usage}
 %
-% \subsection{Class Declaration}
+% \subsection{Class Declaration and Options}
 %
-% The class declaration statement is
+% \DescribeMacro{\documentclass}
+% The \index{class declaration|hyperit} class declaration statement is
 % \begin{quote}
 % |\documentclass|\oarg{options}|{ECULetter}|
 % \end{quote}
-% The following options are valid:
+% The following \index{class options|hyperit} options are valid:
 % \begin{description}
-%     \item[|bw|] Use black and white graphics for the letterhead.
-%     \item[|color|] Use color graphics for the letterhead (set by 
-%                  default).
-%     \item[|memo|] Write the memo header to the first page.
-%     \item[|noletterhead|] Do not write the letterhead to the first page.
+% \item[|bw|] \index{bw|hyperit} Use black and white graphics for the
+%             letterhead.
+% \item[|color|] \index{color|hyperit} Use color graphics for the
+%             letterhead (set by default).
+% \item[|memo|] \index{memo|hyperit} Write the memo header to the
+%             first page.
+% \item[|noletterhead|] \index{noletterhead|hyperit} Do not write the
+%             letterhead to the first page.
 % \end{description}
 %
 % All other options are passed to the \textsf{article} class
@@ -100,6 +118,7 @@
 %
 % \subsection{Required Packages}
 %
+% \index{packages, required|hyperit} \index{geometry package|hyperit}
 % The \textsf{ECULetter} class loads the packages |geometry|,
 % |graphicx|, |fancyhdr|, |lastpage|, and |wrapfig|. Commands from each
 % of these packages may be used in the document.  Use the |\geometry|
@@ -109,9 +128,12 @@
 % \subsection{Required Graphics Files}
 %
 % The \textsf{ECULetter} class requires three graphics files to be
-% placed within the latex (|graphicx|) path: |ECULogo| (color ECU
-% logo), |ECULogoBW| (black and white ECU logo), and |signature|
-% (signature image).  These files may be in any format accessible to the
+% placed within the latex (|graphicx|) path: \index{ECULogo
+% file|hyperit} |ECULogo| (color ECU logo), 
+% \index{ECULogoBW file|hyperit} |ECULogoBW| (black and white ECU
+% logo), and
+% \index{signature file|hyperit} |signature| (signature image).  These
+% files may be in any format accessible to the
 % |graphicx| package (with the appropriate extensions) and the files in
 % the latex path may be symlinks.
 %
@@ -121,7 +143,8 @@
 % |\lh|\dots.  Omitting any of these definitions or defining it as empty
 % (|{}|) or whitespace-only (|{  }|) results in that item being omitted
 % from the letterhead.  The letterhead content is usually defined in the
-% configuration file ECULetterDefs.cfg or in the document preamble.
+% configuration file \index{ECULetterDefs.cfg file|hyperit}
+% ECULetterDefs.cfg or in the document preamble.
 %
 % \DescribeMacro{\lhname}
 % The author's name on the letterhead is set with
@@ -353,14 +376,18 @@
 % The closing of the letter is given by |\closing| \marg{closing text}
 % for a closing statement with name below and space for a handwritten
 % signature.  The command |\closingsig| \oarg{sigwidth} \marg{closing
-% text} inserts the graphic in the file |signature| into the signature
-% space between the closing text and the closing name.  The optional
-% argument $\langle$\emph{siggwidth}$\rangle$ sets the width of the signature graphic with
-% default value |1.75in|.  The file |signature| may be in any format
+% text} inserts the graphic in the file \index{signature file|hyperit}
+% |signature| into the signature space between the closing text and the
+% closing name.  The optional argument
+% $\langle$\emph{siggwidth}$\rangle$ sets the width of the signature
+% graphic with default value |1.75in|.  The file 
+% \index{signature file|hyperit} |signature| may be in any format
 % accessible to the |graphicx| package.  The default name used below the
 % closing is the letterhead name specified by |\lhname|, but it can be
-% set with |\closingname| \marg{closing name}.  The $\langle$\emph{closing name}$\rangle$
-%  may include formatting commands and line breaks (for titles, \emph{etc.}).
+% set with
+% |\closingname| \marg{closing name}.  The $\langle$\emph{closing
+% name}$\rangle$ may include formatting commands and line breaks (for
+% titles, \emph{etc.}).
 %
 % \DescribeEnv{afterclose}
 % \DescribeMacro{\ps}
@@ -385,12 +412,13 @@
 %
 % \subsection{User Definitions}
 %
-% The class reads user definitions from the file |ECULetterDefs.cfg|
-% placed within the latex path.  Definitions in this file may be
-% overridden on an \emph{ad-hoc} basis with commands in the document
-% preamble.  Examples of useful user definitions include letterhead
-% content definition commands so frequently-used values to not have to
-% be specified in each document.
+% The class reads user definitions from the file
+% \index{ECULetterDefs.cfg file|hyperit} |ECULetterDefs.cfg| placed
+% within the latex path.  Definitions in this file may be overridden on
+% an \emph{ad-hoc} basis with commands in the document preamble. 
+% Examples of useful user definitions include letterhead content
+% definition commands so frequently-used values to not have to be
+% specified in each document.
 %
 % \section{Sample Files}
 %
@@ -401,6 +429,7 @@
 %
 % \subsection{Sample User Configuration File}
 %
+% \index{ECULetterDefs.cfg file|hyperit} 
 % \begin{verbatim}
 % % This is a sample user configuration file for use with the ECULetter
 % % class.  Save this file with name ECULetterDefs.cfg, and save it
@@ -862,7 +891,8 @@
 %    \end{macrocode}
 %
 % \begin{macro}{\closingsig}
-% This command will include a signature image in the file |signature|.
+% This command will include a signature image in the file
+% \index{signature file|hyperit} |signature|.
 %    \begin{macrocode}
 \DeclareRobustCommand{\closingsig}[2][\sigwidth]{
   \par
@@ -1053,8 +1083,8 @@
 \raggedright
 %    \end{macrocode}
 %
-% Read user defined commands from the file |ECULetterDefs.cfg| if it
-% exists.
+% Read user defined commands from the file 
+% \index{ECULetterDefs.cfg file|hyperit} |ECULetterDefs.cfg| if it exists.
 %    \begin{macrocode}
 \InputIfFileExists{ECULetterDefs.cfg}{%
   \ClassInfo{ECULetter}{Loading user configurations from ECULetterDefs.cfg}%
