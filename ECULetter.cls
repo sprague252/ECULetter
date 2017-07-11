@@ -21,7 +21,7 @@
 %% 
 \NeedsTeXFormat{LaTeX2e}[2005/12/01]
 \ProvidesClass{ECULetter}
-[2017/03/21 v1.0 ECU letterhead with letter and memo formatting]
+[2017/03/21 v1.1 ECU letterhead with letter and memo formatting]
 \LoadClass[11pt]{article}
 \newif\if@bw
 \@bwfalse
@@ -34,6 +34,7 @@
 \RequirePackage{fancyhdr}
 \RequirePackage{lastpage}
 \RequirePackage{wrapfig}
+\RequirePackage{ragged2e}
 \DeclareOption{bw}{\@bwtrue}
 \DeclareOption{color}{\@bwfalse}
 \DeclareOption{noletterhead}{\@printletterheadfalse}
@@ -340,6 +341,7 @@
   \fi
   \if@printmemohead
     \memohead
+    \par
   \fi
 }
 \endinput

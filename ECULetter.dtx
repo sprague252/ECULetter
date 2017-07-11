@@ -21,7 +21,7 @@
 %<class>\NeedsTeXFormat{LaTeX2e}[2005/12/01]
 %<class>\ProvidesClass{ECULetter}
 %<*class>    
-[2017/03/21 v1.0 ECU letterhead with letter and memo formatting]
+[2017/03/21 v1.1 ECU letterhead with letter and memo formatting]
 %</class>
 %
 %<*driver>
@@ -36,7 +36,7 @@
 %</driver>
 % \fi
 %
-% \CheckSum{509}
+% \CheckSum{511}
 %
 % \CharacterTable
 %  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -120,10 +120,10 @@
 %
 % \index{packages, required|hyperit} \index{geometry package|hyperit}
 % The \textsf{ECULetter} class loads the packages |geometry|,
-% |graphicx|, |fancyhdr|, |lastpage|, and |wrapfig|. Commands from each
-% of these packages may be used in the document.  Use the |\geometry|
-% command from the |geometry| package to adjust the document layout and
-% paper size (which defaults to |letterpaper|).
+% |graphicx|, |fancyhdr|, |lastpage|, |wrapfig|, and |ragged2e|. 
+% Commands from each of these packages may be used in the document.  Use
+% the |\geometry| command from the |geometry| package to adjust the
+% document layout and paper size (which defaults to |letterpaper|).
 %
 % \subsection{Required Graphics Files}
 %
@@ -151,7 +151,10 @@
 % \begin{quote}
 %     |\lhname| \marg{Author Name}
 % \end{quote}
-% where $\langle$\emph{Author Name}$\rangle$ is the name as it appears at the top of the letterhead.  Remember to use a backslash (|\|) after periods following initials to prevent end-of-sentence spacing (for example, |John H.\ Doe|).
+% where $\langle$\emph{Author Name}$\rangle$ is the name as it appears
+% at the top of the letterhead.  Remember to use a backslash (|\|) after
+% periods following initials to prevent end-of-sentence spacing (for
+% example, |John H.\ Doe|).
 %
 % \DescribeMacro{\lhdegree}
 % The author's degree on the letterhead is set with
@@ -167,19 +170,20 @@
 % \begin{quote}
 %     |\lhtitle| \marg{Title}
 % \end{quote}
-% where $\langle$\emph{Title}$\rangle$ is the title (\emph{e.g.} Associate Professor) on the
-% letterhead.  The title is only written to the letterhead if |\lhname|
-% is defined.
+% where $\langle$\emph{Title}$\rangle$ is the title (\emph{e.g.}
+% Associate Professor) on the letterhead.  The title is only written to
+% the letterhead if |\lhname| is defined.
 %
 % \DescribeMacro{\lhECUaddress}
 % The department address on the letterhead is set with
 % \begin{quote}
 %     |\lhECUaddress| \marg{address}
 % \end{quote}
-% where $\langle$\emph{address}$\rangle$ is the campus portion of the address on the
-% letterhead.  The $\langle$\emph{address}$\rangle$ can contain formatting and line breaks. 
-% The $\langle$\emph{address}$\rangle$ field can be used to format a departmental letterhead
-% (with |\lhname| left undefined).
+% where $\langle$\emph{address}$\rangle$ is the campus portion of the
+% address on the letterhead.  The $\langle$\emph{address}$\rangle$ can
+% contain formatting and line breaks. The
+% $\langle$\emph{address}$\rangle$ field can be used to format a
+% departmental letterhead (with |\lhname| left undefined).
 %
 % \DescribeMacro{\lhECUPostal}
 % The macro |\ECUPostal| gives the portion of the postal address after
@@ -197,16 +201,18 @@
 % \begin{quote}
 %     |\lhphone| \marg{xxx-xxx-xxxx}
 % \end{quote}
-% where $\langle$\emph{xxx-xxx-xxxx}$\rangle$ is the telephone number. Note that it can be
-% formatted in as desired, \emph{e.g.} (123) 456-7890 or 123.456.7890.
+% where $\langle$\emph{xxx-xxx-xxxx}$\rangle$ is the telephone number.
+% Note that it can be formatted in as desired, \emph{e.g.} (123)
+% 456-7890 or 123.456.7890.
 %
 % \DescribeMacro{\lhfax}
 % The fax number on the letterhead is set with
 % \begin{quote}
 %     |\lhfax| \marg{xxx-xxx-xxxx}
 % \end{quote}
-% where $\langle$\emph{xxx-xxx-xxxx}$\rangle$ is the fax number. Note that it can be formatted
-% in as desired, \emph{e.g.} (123) 456-7890 or 123.456.7890.
+% where $\langle$\emph{xxx-xxx-xxxx}$\rangle$ is the fax number. Note
+% that it can be formatted in as desired, \emph{e.g.} (123) 456-7890 or
+% 123.456.7890.
 %
 % \DescribeMacro{\lhemail}
 % The E-mail address on the letterhead is set with
@@ -220,7 +226,8 @@
 % \begin{quote}
 %     |\lhwww| \marg{ecuurl.ecu.edu}
 % \end{quote}
-% where $\langle$\emph{ecuurl.ecu.edu}$\rangle$ is the URL as should appear on the letterhead.
+% where $\langle$\emph{ecuurl.ecu.edu}$\rangle$ is the URL as should
+% appear on the letterhead.
 %
 % \subsection{Memo Header Content}
 %
@@ -246,9 +253,9 @@
 % \begin{quote}
 %     |\memoto| \marg{therecipient}
 % \end{quote}
-% where $\langle$\emph{therecipient}$\rangle$ is the name listed in the TO-field of the memo
-% header (TO: therecipient). Note that a second line (for example the
-% recipient's title) can be included by specifying 
+% where $\langle$\emph{therecipient}$\rangle$ is the name listed in the
+% TO-field of the memo header (TO: therecipient). Note that a second
+% line (for example the recipient's title) can be included by specifying 
 % \begin{quote}
 %     |\memoto{|$\langle$\emph{therecipient}$\rangle$ |\\ &| %
 %          $\langle$\emph{line 2}$\rangle$|}|
@@ -264,9 +271,9 @@
 % \begin{quote}
 %     |\memofrom| \marg{thesender}
 % \end{quote}
-% where $\langle$\emph{thesender}$\rangle$ is the name listed in the FROM-field of the memo
-% header (FROM: thesender). Note that a second line (for example the
-% sender's title) can be included by specifying 
+% where $\langle$\emph{thesender}$\rangle$ is the name listed in the
+% FROM-field of the memo header (FROM: thesender). Note that a second
+% line (for example the sender's title) can be included by specifying 
 % \begin{quote}
 %     |\memofrom{|$\langle$\emph{thesender}$\rangle$ |\\ &| %
 %          $\langle$\emph{line 2}$\rangle$|}|
@@ -298,10 +305,11 @@
 % \begin{quote}
 %     |\memosubject| \marg{subject text}
 % \end{quote}
-% where $\langle$\emph{subject text}$\rangle$ is used in in the SUBJECT-field of the memo
-% header (SUBJECT: subject text). Normally the $\langle$\emph{subject text}$\rangle$ would fit
-% in a one-line, regular-width table file.  A second line for the
-% subject text can be included by specifying 
+% where $\langle$\emph{subject text}$\rangle$ is used in in the
+% SUBJECT-field of the memo header (SUBJECT: subject text). Normally the
+% $\langle$\emph{subject text}$\rangle$ would fit in a one-line,
+% regular-width table file.  A second line for the subject text can be
+% included by specifying 
 % \begin{quote}
 %     |\memosubject{|$\langle$\emph{subject text}$\rangle$ %
 %         |\\ &| $\langle$\emph{line 2}$\rangle$|}|
@@ -581,6 +589,7 @@
 \RequirePackage{fancyhdr}
 \RequirePackage{lastpage}
 \RequirePackage{wrapfig}
+\RequirePackage{ragged2e}
 %    \end{macrocode}
 %
 % Declare options
@@ -1103,6 +1112,7 @@
   \fi
   \if@printmemohead
     \memohead
+    \par
   \fi
 }
 %    \end{macrocode}
