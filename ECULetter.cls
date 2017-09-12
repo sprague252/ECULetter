@@ -21,31 +21,48 @@
 %% 
 \NeedsTeXFormat{LaTeX2e}[2005/12/01]
 \ProvidesClass{ECULetter}
-[2017/03/21 v1.1 ECU letterhead with letter and memo formatting]
-\LoadClass[11pt]{article}
+[2017/09/12 v2.0 ECU letterhead with letter and memo formatting]
 \newif\if@bw
 \@bwfalse
 \newif\if@printletterhead
 \@printletterheadtrue
 \newif\if@printmemohead
 \@printmemoheadfalse
-\RequirePackage[letterpaper, hmargin={2in,1in}, vmargin=1in]{geometry}
-\RequirePackage{graphicx}
-\RequirePackage{fancyhdr}
-\RequirePackage{lastpage}
-\RequirePackage{wrapfig}
-\RequirePackage{ragged2e}
+\newif\if@sizegiven
+\@sizegivenfalse
 \DeclareOption{bw}{\@bwtrue}
 \DeclareOption{color}{\@bwfalse}
 \DeclareOption{noletterhead}{\@printletterheadfalse}
 \DeclareOption{memo}{\@printmemoheadtrue}
-\DeclareOption{10pt}{\OptionNotUsed}
-\DeclareOption{12pt}{\OptionNotUsed}
+\DeclareOption{10pt}{
+  \@sizegiventrue
+  \PassOptionsToClass{10pt}{article}
+}
+\DeclareOption{11pt}{
+  \@sizegiventrue
+  \PassOptionsToClass{11pt}{article}
+}
+\DeclareOption{12pt}{
+  \@sizegiventrue
+  \PassOptionsToClass{12pt}{article}
+}
 \DeclareOption{twocolumn}{\OptionNotUsed}
 \DeclareOption*{%
-      \PassOptionsToClass{\CurrentOption}{article}%
+  \PassOptionsToClass{\CurrentOption}{article}%
 }
 \ProcessOptions\relax
+\if@sizegiven\else
+  \PassOptionsToClass{11pt}{article}
+\fi
+\LoadClass{article}
+\RequirePackage[letterpaper, hmargin={1in}, vmargin=1in]{geometry}
+\RequirePackage{graphicx}
+\RequirePackage{color}
+\RequirePackage{fancyhdr}
+\RequirePackage{lastpage}
+\RequirePackage{ragged2e}
+\definecolor{ecupurple}{RGB}{80, 45, 127}
+\definecolor{ecugold}{RGB}{255, 200, 0}
 \renewcommand{\headrulewidth}{0pt}
 \renewcommand{\footrulewidth}{0pt}
 \newif\if@lhnamedefined
@@ -89,9 +106,8 @@
   \@lhECUaddressdefinedtrue
 }
 \DeclareRobustCommand{\lhECUPostal}{
-    East Carolina University\\
-    Greenville, NC 27858-4353\\
-    USA
+    East Carolina University \textbar\
+    Greenville, NC 27858-4353
 }
 \newif\if@lhphonedefined
 \@lhphonedefinedfalse
@@ -167,11 +183,6 @@
   \DeclareRobustCommand*{\@ptwohead}{#1}
   \@ptwoheaddefinedtrue
 }
-\DeclareRobustCommand{\UNC}{
-  East Carolina University is a constituent institution of the
-  University of North Carolina.\\
-  An equal opportunity university.
-}
 \DeclareRobustCommand{\iaddress}[1]{
   \par
   #1
@@ -222,43 +233,6 @@
 }
 \DeclareRobustCommand{\letterhead}{
   \thispagestyle{lhpage}
-  \begin{wrapfigure}[15]{i}[0pt]{0in}
-    \hspace{-1.75in}
-    \begin{minipage}[t]{1.7in}
-      \vspace{-0.5in}
-      \if@bw
-        \includegraphics[width=4.75in]{ECULogoBW}\\ \\
-      \else
-        \includegraphics[width=4.75in]{ECULogo}\\ \\
-      \fi
-      {%
-        \sf\raggedright \fontsize{9}{10.8}\selectfont
-        \if@lhnamedefined
-          \textbf{\@lhname\if@lhdegreedefined{, \@lhdegree}\fi}\\
-          \if@lhtitledefined{\@lhtitle\\}\fi
-        \fi
-      \if@lhECUaddressdefined
-        \@lhECUaddress ~\\
-      \fi
-      \lhECUPostal\\~\\
-      \if@lhphonedefined
-        \@lhphone\ office\\
-      \fi
-      \if@lhfaxdefined
-        \@lhfax\ fax\\~\\
-      \fi
-      \if@lhemaildefined
-        \@lhemail \\
-      \fi
-      \if@lhwwwdefined
-        \@lhwww \\
-      \fi
-      }
-    \end{minipage}%
-  \end{wrapfigure}
-  \normalsize
-  ~
-  \par
 }
 \DeclareRobustCommand{\memohead}{
 \begin{tabular}{l l}
@@ -287,15 +261,7 @@
 \parskip = 2ex
 \parindent = 0.0in
 \footskip = 18.7pt
-\fancypagestyle{lhpage}{%
-  \fancyhf{}
-  \fancyfoot[L]{\hspace{-1.75in}
-    \begin{minipage}{1.7in}
-      \raggedright
-      \emph{\fontsize{7}{8.4}\selectfont \UNC\\}
-    \end{minipage}
-  }%
-}%
+%%
 \newenvironment{afterclose}{\begin{description}}{\end{description}}
 \DeclareRobustCommand*{\ps}{
   \item[{\rm{P.S.}}]
@@ -315,7 +281,68 @@
 \DeclareRobustCommand*{\PC}{
   \item[{\rm{PC:}}]
 }
+\fancypagestyle{lhpage}{%
+     \newgeometry{vmargin={2in, 1in}, hmargin=1in, headheight=62pt, foot=6pt}
+     \renewcommand{\headrulewidth}{2pt}
+     \renewcommand{\headrule}{\hbox to\headwidth{%
+       \if@bw\else
+         \color{ecugold}%
+       \fi
+       \leaders\hrule height \headrulewidth\hfill}}
+  \fancyhf{}
+  \fancyhead[L]{%
+    \if@bw
+      \includegraphics[scale=0.75, viewport=48 8 144 72]{ECULogo2017BW}
+    \else
+      \includegraphics[scale=0.75, viewport=48 8 144 72]{ECULogo2017}
+    \fi
+  }
+  \fancyhead[R]{
+    \if@bw\else
+      \color{ecupurple}
+    \fi
+    \sf\raggedleft \fontsize{9}{10.8}\selectfont
+     \if@lhnamedefined
+       \textbf{\@lhname\if@lhdegreedefined{, \@lhdegree}\fi}
+          \if@lhtitledefined
+            \textbar\ \@lhtitle\\
+          \else
+            \\
+          \fi
+        \fi
+      \if@lhECUaddressdefined
+        \@lhECUaddress \textbar
+      \fi
+      \lhECUPostal\\
+      \if@lhphonedefined
+        \@lhphone\ office
+      \fi
+      \if@lhfaxdefined
+        \if@lhphonedefined
+          \textbar\
+        \fi
+        \@lhfax\ fax
+      \fi
+      \if@lhemaildefined
+        \textbar\ \@lhemail\
+      \fi
+      \if@lhwwwdefined
+        \textbar\ \@lhwww
+      \fi
+  }
+  \fancyfoot{}
+  \fancyfoot[R]{
+    \if@bw\else
+      \color{ecugold}
+    \fi
+    \sf\raggedleft \fontsize{16}{19.2}\selectfont
+    \vspace{-12pt}
+    www.ecu.edu
+  }
+}
 \pagestyle{fancy}
+\newgeometry{vmargin=1in, hmargin=1in, headheight=16pt, includehead}
+\renewcommand{\headrulewidth}{0pt}
 \lhead{
   \if@ptwoheaddefined
     \@ptwohead

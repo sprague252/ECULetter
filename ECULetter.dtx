@@ -21,7 +21,7 @@
 %<class>\NeedsTeXFormat{LaTeX2e}[2005/12/01]
 %<class>\ProvidesClass{ECULetter}
 %<*class>    
-[2017/03/21 v1.1 ECU letterhead with letter and memo formatting]
+[2017/09/12 v2.0 ECU letterhead with letter and memo formatting]
 %</class>
 %
 %<*driver>
@@ -36,7 +36,7 @@
 %</driver>
 % \fi
 %
-% \CheckSum{511}
+% \CheckSum{526}
 %
 % \CharacterTable
 %  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -58,6 +58,7 @@
 % \newcommand{\hyperit}[1]{\textit{\hyperpage{#1}}}
 %
 % \changes{v1.0}{2017/03/21}{Initial version}
+% \changes{v2.0}{2017/09/12}{ECU 2017 letterhead format}
 %
 % \GetFileInfo{ECULetter.dtx}
 %
@@ -118,20 +119,23 @@
 %
 % \subsection{Required Packages}
 %
+% \changes{v2.0}{2017/09/12}{Package wrapfig no longer used}
+% \changes{v2.0}{2017/09/12}{Package color required}
 % \index{packages, required|hyperit} \index{geometry package|hyperit}
 % The \textsf{ECULetter} class loads the packages |geometry|,
-% |graphicx|, |fancyhdr|, |lastpage|, |wrapfig|, and |ragged2e|. 
+% |graphicx|, |color|, |fancyhdr|, |lastpage|, and |ragged2e|. 
 % Commands from each of these packages may be used in the document.  Use
 % the |\geometry| command from the |geometry| package to adjust the
 % document layout and paper size (which defaults to |letterpaper|).
 %
 % \subsection{Required Graphics Files}
 %
+%  \changes{v2.0}{2017/09/12}{2017 ECU logo files}
 % The \textsf{ECULetter} class requires three graphics files to be
-% placed within the latex (|graphicx|) path: \index{ECULogo
-% file|hyperit} |ECULogo| (color ECU logo), 
-% \index{ECULogoBW file|hyperit} |ECULogoBW| (black and white ECU
-% logo), and
+% placed within the latex (|graphicx|) path: \index{ECULogo2017
+% file|hyperit} |ECULogo2017| (color ECU logo, 2017 version), 
+% \index{ECULogo2017BW file|hyperit} |ECULogo2017BW| (black and white ECU
+% logo, 2017 edition), and
 % \index{signature file|hyperit} |signature| (signature image).  These
 % files may be in any format accessible to the
 % |graphicx| package (with the appropriate extensions) and the files in
@@ -189,9 +193,7 @@
 % The macro |\ECUPostal| gives the portion of the postal address after
 % the departmental address.  This macro is defined as 
 % \begin{quote}
-%     East Carolina University\\
-%     Greenville, NC 27858-4353\\
-%     USA
+%     East Carolina University \textbar\ Greenville, NC 27858-4353
 % \end{quote}
 % and can be redefined with %
 % |\renewcommand{\lhECUPostal}|\marg{New Address}.
@@ -211,7 +213,7 @@
 %     |\lhfax| \marg{xxx-xxx-xxxx}
 % \end{quote}
 % where $\langle$\emph{xxx-xxx-xxxx}$\rangle$ is the fax number. Note
-% that it can be formatted in as desired, \emph{e.g.} (123) 456-7890 or
+% that it can be formatted in as desired, \emph{e.g.} (123)~456-7890 or
 % 123.456.7890.
 %
 % \DescribeMacro{\lhemail}
@@ -320,17 +322,7 @@
 % \subsection{Other Formatting}
 % These preamble commands format other parts of the letter.
 %
-% \DescribeMacro{\UNC}
-% The footer statement about ECU being a member of the UNC System and
-% the Equal Opportunity statement are defined with |\UNC|, which
-% defaults to
-% \begin{quote}
-%     East Carolina University is a constituent institution of the
-%     University of North Carolina.\\ 
-%     An equal opportunity university.
-% \end{quote}
-% This can be redefined with 
-%  |\renewcommand{\UNC}|\marg{New statement}.
+%  \changes{v2.0}{2017/09/12}{UNC statement removed from letterhead}
 %
 % \DescribeMacro{\ptwohead}
 % An optional header included after the first page is defined with
@@ -347,11 +339,10 @@
 % \DescribeMacro{\letterhead}
 % The letterhead is written to the document using the content defined in
 % the preamble with |\letterhead|. The |\letterhead| command should be
-% the first thing written on the page.  The letterhead is written to the
-% first page of the document by default, unless the |noletterhead| class
-% option is given. The |\letterhead| command allows the letterhead to be
-% written to other pages (\emph{e.g.}, when the file contains multiple
-% letters).
+% the first thing written on the page.  This is done by default, unless
+% the |noletterhead| class option is given. The |\letterhead| command
+% allows the letterhead to be written to other pages (\emph{e.g.}, when
+% the file contains multiple letters).
 %
 % \DescribeMacro{\memohead}
 % The memo header is written to the document using the content defined
@@ -456,7 +447,7 @@
 % \lhtitle{Associate Professor} 
 % %
 % % Define the departmental/campus address.
-% \lhECUaddress{Department of PhysicsMail Stop 563} 
+% \lhECUaddress{Department of Physics \textbar\ Mail Stop 563} 
 % %
 % % Define the telephone number. You can use different formats for the
 % % number if desired. 
@@ -466,10 +457,10 @@
 % \lhfax{252-328-6314} 
 % %
 % % Define the E-mail address. 
-% \lhemail{piratep@ecu.edu}
+% \lhemail{piratepd@ecu.edu}
 % %
 % % Define the web page.
-% \lhwww{myweb.ecu.edu/piratep}
+% \lhwww{myweb.ecu.edu/piratepd}
 % \end{verbatim}
 %
 % \subsection{Sample Document Template for Letter}
@@ -561,12 +552,6 @@
 %    \PrintIndex
 % }
 %
-% The \textsf{ECULetter} class is based on the \textsf{article} class,
-% not the \textsf{letter} class.
-%    \begin{macrocode}
-\LoadClass[11pt]{article}
-%    \end{macrocode}
-%
 % Define boolean parameters to implement class options.
 %    \begin{macrocode}
 \newif\if@bw
@@ -577,21 +562,16 @@
 \newif\if@printletterhead
 \@printletterheadtrue
 %    \end{macrocode}
+%
 %    \begin{macrocode}
 \newif\if@printmemohead
 \@printmemoheadfalse
 %    \end{macrocode}
 %
-% Load required packages.
 %    \begin{macrocode}
-\RequirePackage[letterpaper, hmargin={2in,1in}, vmargin=1in]{geometry}
-\RequirePackage{graphicx}
-\RequirePackage{fancyhdr}
-\RequirePackage{lastpage}
-\RequirePackage{wrapfig}
-\RequirePackage{ragged2e}
+\newif\if@sizegiven
+\@sizegivenfalse
 %    \end{macrocode}
-%
 % Declare options
 %    \begin{macrocode}
 \DeclareOption{bw}{\@bwtrue}
@@ -600,17 +580,34 @@
 \DeclareOption{memo}{\@printmemoheadtrue}
 %    \end{macrocode}
 %
+%   \changes{v2.0}{2017/09/12}{Options 10pt and 12pt are now available}
+%    The \textsf{ECULetter} class is based on the \textsf{article} class,
+%    not the \textsf{letter} class.
+%    Pass font size options to \textsf{article} class.
+%    \begin{macrocode}
+\DeclareOption{10pt}{
+  \@sizegiventrue
+  \PassOptionsToClass{10pt}{article}
+}
+\DeclareOption{11pt}{
+  \@sizegiventrue
+  \PassOptionsToClass{11pt}{article}
+}
+\DeclareOption{12pt}{
+  \@sizegiventrue
+  \PassOptionsToClass{12pt}{article}
+}
+%    \end{macrocode}
+%
 % Declare confliction \textsf{article} class options as |\OptionNotUsed|.
 %    \begin{macrocode}
-\DeclareOption{10pt}{\OptionNotUsed}
-\DeclareOption{12pt}{\OptionNotUsed}
 \DeclareOption{twocolumn}{\OptionNotUsed}
 %    \end{macrocode}
 %
 % Pass all undefined options to the \textsf{article} class.
 %    \begin{macrocode}
 \DeclareOption*{%
-      \PassOptionsToClass{\CurrentOption}{article}%
+  \PassOptionsToClass{\CurrentOption}{article}%
 }
 %    \end{macrocode}
 %
@@ -619,6 +616,41 @@
 \ProcessOptions\relax
 %    \end{macrocode}
 %
+% If the font size option is not given, use 11pt as default instead of the 10pt default of
+% the \textsf{article} class.
+%    \begin{macrocode}
+\if@sizegiven\else
+  \PassOptionsToClass{11pt}{article}
+\fi
+%    \end{macrocode}
+%
+% Load the \textsf{article} class.
+%    \begin{macrocode}
+\LoadClass{article}
+%    \end{macrocode}
+%
+% Load required packages.
+%    \begin{macrocode}
+\RequirePackage[letterpaper, hmargin={1in}, vmargin=1in]{geometry}
+\RequirePackage{graphicx}
+%    \end{macrocode}
+%    \changes{v2.0}{2017/09/12}{Package color required}
+%    \begin{macrocode}
+\RequirePackage{color}
+\RequirePackage{fancyhdr}
+\RequirePackage{lastpage}
+%    \end{macrocode}
+%    \changes{v2.0}{2017/09/12}{Package wrapfig no longer used}
+%    \begin{macrocode}
+\RequirePackage{ragged2e}
+%    \end{macrocode}
+%
+% Define ECU colors.
+%    \changes{v2.0}{2017/09/12}{ECU colors for letterhead header, headrule, and footer}
+%    \begin{macrocode}
+\definecolor{ecupurple}{RGB}{80, 45, 127}
+\definecolor{ecugold}{RGB}{255, 200, 0}
+%    \end{macrocode}
 % No headrule or footrule.
 %    \begin{macrocode}
 \renewcommand{\headrulewidth}{0pt}
@@ -696,9 +728,8 @@
 %
 %    \begin{macrocode}
 \DeclareRobustCommand{\lhECUPostal}{
-    East Carolina University\\ 
-    Greenville, NC 27858-4353\\
-    USA
+    East Carolina University \textbar\ 
+    Greenville, NC 27858-4353
 }
 %    \end{macrocode}
 %
@@ -839,13 +870,7 @@
 }
 %    \end{macrocode}
 %
-%    \begin{macrocode}
-\DeclareRobustCommand{\UNC}{
-  East Carolina University is a constituent institution of the 
-  University of North Carolina.\\ 
-  An equal opportunity university.
-}
-%    \end{macrocode}
+%    \changes{v2.0}{2017/09/12}{UNC statement removed from letterhead}
 %
 %    \begin{macrocode}
 \DeclareRobustCommand{\iaddress}[1]{
@@ -925,53 +950,6 @@
 %    \begin{macrocode}
 \DeclareRobustCommand{\letterhead}{
   \thispagestyle{lhpage}
-  \begin{wrapfigure}[15]{i}[0pt]{0in}
-    \hspace{-1.75in}
-    \begin{minipage}[t]{1.7in}
-      \vspace{-0.5in}
-      \if@bw
-%    \end{macrocode}
-% The black and white ECU logo file is in the |\includegraphics| command below. 
-% This file must be somewhere in the latex path. 
-% (Test with the terminal command |$ kpsewhich filename.pdf|.)
-%    \begin{macrocode}
-        \includegraphics[width=4.75in]{ECULogoBW}\\ \\
-      \else
-%    \end{macrocode}
-% The ECU logo file is in the |\includegraphics| command below. This file
-% must be somewhere in the latex path. 
-% (Test with the terminal command |$ kpsewhich filename.pdf|.)
-%    \begin{macrocode}
-        \includegraphics[width=4.75in]{ECULogo}\\ \\
-      \fi
-      {%
-        \sf\raggedright \fontsize{9}{10.8}\selectfont
-        \if@lhnamedefined
-          \textbf{\@lhname\if@lhdegreedefined{, \@lhdegree}\fi}\\
-          \if@lhtitledefined{\@lhtitle\\}\fi
-        \fi
-      \if@lhECUaddressdefined
-        \@lhECUaddress ~\\ 
-      \fi
-      \lhECUPostal\\~\\
-      \if@lhphonedefined
-        \@lhphone\ office\\
-      \fi
-      \if@lhfaxdefined
-        \@lhfax\ fax\\~\\
-      \fi
-      \if@lhemaildefined
-        \@lhemail \\
-      \fi
-      \if@lhwwwdefined
-        \@lhwww \\
-      \fi
-      }
-    \end{minipage}%
-  \end{wrapfigure}
-  \normalsize
-  ~
-  \par
 }
 %    \end{macrocode}
 % \end{macro}
@@ -1012,20 +990,7 @@
 \parindent = 0.0in
 \footskip = 18.7pt
 %    \end{macrocode}
-%
-% Format the first page headers and footers.
-%    \begin{macrocode}
-\fancypagestyle{lhpage}{%
-  \fancyhf{}
-  \fancyfoot[L]{\hspace{-1.75in}
-    \begin{minipage}{1.7in}
-      \raggedright
-      \emph{\fontsize{7}{8.4}\selectfont \UNC\\} 
-    \end{minipage}
-  }%
-}%
-%    \end{macrocode}
-%
+%%
 % \begin{environment}{afterclose}
 % Define the |afterclose| environment.
 %    \begin{macrocode}
@@ -1069,10 +1034,84 @@
   \item[{\rm{PC:}}] 
 }
 %    \end{macrocode}
-%
+% Define the page style for the letterhead page.
+%    \begin{macrocode}
+\fancypagestyle{lhpage}{%
+     \newgeometry{vmargin={2in, 1in}, hmargin=1in, headheight=62pt, foot=6pt}
+%    \end{macrocode}
+%    \changes{v2.0}{2017/09/12}{Headrule in letterhead}
+%    \begin{macrocode}
+     \renewcommand{\headrulewidth}{2pt}
+     \renewcommand{\headrule}{\hbox to\headwidth{%
+       \if@bw\else
+         \color{ecugold}%
+       \fi
+       \leaders\hrule height \headrulewidth\hfill}}
+%    \end{macrocode}
+% The black and white  and color ECU logo files are in the |\includegraphics| commands below. 
+% these files must be somewhere in the latex path. 
+% (Test with the terminal command |$ kpsewhich filename.pdf|.)
+%    \begin{macrocode}
+  \fancyhf{}
+  \fancyhead[L]{%
+    \if@bw
+      \includegraphics[scale=0.75, viewport=48 8 144 72]{ECULogo2017BW}
+    \else
+      \includegraphics[scale=0.75, viewport=48 8 144 72]{ECULogo2017}
+    \fi
+  }
+%    \end{macrocode}
+% Next the letterhead text. For a color letterhead, use the color ecupurple defined above.
+%    \begin{macrocode}
+  \fancyhead[R]{
+    \if@bw\else
+      \color{ecupurple}
+    \fi
+    \sf\raggedleft \fontsize{9}{10.8}\selectfont
+     \if@lhnamedefined
+       \textbf{\@lhname\if@lhdegreedefined{, \@lhdegree}\fi}
+          \if@lhtitledefined
+            \textbar\ \@lhtitle\\
+          \else
+            \\
+          \fi
+        \fi
+      \if@lhECUaddressdefined
+        \@lhECUaddress \textbar 
+      \fi
+      \lhECUPostal\\
+      \if@lhphonedefined
+        \@lhphone\ office
+      \fi
+      \if@lhfaxdefined
+        \if@lhphonedefined
+          \textbar\ 
+        \fi
+        \@lhfax\ fax
+      \fi
+      \if@lhemaildefined
+        \textbar\ \@lhemail\ 
+      \fi
+      \if@lhwwwdefined
+        \textbar\ \@lhwww
+      \fi
+  }
+  \fancyfoot{}
+  \fancyfoot[R]{
+    \if@bw\else
+      \color{ecugold}
+    \fi
+    \sf\raggedleft \fontsize{16}{19.2}\selectfont
+    \vspace{-12pt}
+    www.ecu.edu
+  }
+}
+%    \end{macrocode}
 % Set the page style for pages following the first page.
 %    \begin{macrocode}
 \pagestyle{fancy}
+\newgeometry{vmargin=1in, hmargin=1in, headheight=16pt, includehead}
+\renewcommand{\headrulewidth}{0pt}
 \lhead{
   \if@ptwoheaddefined 
     \@ptwohead
