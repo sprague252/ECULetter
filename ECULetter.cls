@@ -24,6 +24,8 @@
 [2017/09/12 v2.0 ECU letterhead with letter and memo formatting]
 \newif\if@bw
 \@bwfalse
+\newif\if@usa
+\@usatrue
 \newif\if@printletterhead
 \@printletterheadtrue
 \newif\if@printmemohead
@@ -32,8 +34,12 @@
 \@sizegivenfalse
 \DeclareOption{bw}{\@bwtrue}
 \DeclareOption{color}{\@bwfalse}
-\DeclareOption{noletterhead}{\@printletterheadfalse}
 \DeclareOption{memo}{\@printmemoheadtrue}
+\DeclareOption{noletterhead}{\@printletterheadfalse}
+\DeclareOption{usa}{\@usatrue}
+\DeclareOption{USA}{\@usatrue}
+\DeclareOption{nousa}{\@usafalse}
+\DeclareOption{noUSA}{\@usafalse}
 \DeclareOption{10pt}{
   \@sizegiventrue
   \PassOptionsToClass{10pt}{article}
@@ -98,17 +104,33 @@
     \@lhtitledefinedtrue
   \fi
 }
+\newif\if@lhdeptdefined
+\@lhdeptdefinedfalse
+\DeclareRobustCommand{\@lhdept}{}
+\DeclareRobustCommand{\lhdept}[1]{
+  \DeclareRobustCommand*{\@lhdept}{#1}
+  \setbox0=\hbox{\@lhdept\unskip}\ifdim\wd0=0pt
+    \@lhdeptdefinedfalse
+  \else
+    \@lhdeptdefinedtrue
+  \fi
+}
 \newif\if@lhECUaddressdefined
 \@lhECUaddressdefinedfalse
 \DeclareRobustCommand{\@lhECUaddress}{}
 \DeclareRobustCommand{\lhECUaddress}[1]{
   \DeclareRobustCommand*{\@lhECUaddress}{#1}
-  \@lhECUaddressdefinedtrue
+  \setbox0=\hbox{\@lhECUaddress\unskip}\ifdim\wd0=0pt
+    \@lhECUaddressdefinedfalse
+  \else
+    \@lhECUaddressdefinedtrue
+  \fi
 }
 \DeclareRobustCommand{\lhECUPostal}{
     East Carolina University \textbar\
     Greenville, NC 27858-4353
 }
+
 \newif\if@lhphonedefined
 \@lhphonedefinedfalse
 \DeclareRobustCommand*{\@lhphone}{}
@@ -302,33 +324,42 @@
       \color{ecupurple}
     \fi
     \sf\raggedleft \fontsize{9}{10.8}\selectfont
-     \if@lhnamedefined
-       \textbf{\@lhname\if@lhdegreedefined{, \@lhdegree}\fi}
-          \if@lhtitledefined
-            \textbar\ \@lhtitle\\
-          \else
-            \\
-          \fi
-        \fi
-      \if@lhECUaddressdefined
-        \@lhECUaddress \textbar
+    \if@lhnamedefined
+      \textbf{\@lhname\if@lhdegreedefined{, \@lhdegree}\fi}
+      \if@lhtitledefined
+        \textbar\ \@lhtitle\
       \fi
-      \lhECUPostal\\
-      \if@lhphonedefined
-        \@lhphone\ office
+      \if@lhdeptdefined
+        \textbar\ \@lhdept\\
+      \else
+        \\
       \fi
-      \if@lhfaxdefined
-        \if@lhphonedefined
-          \textbar\
-        \fi
-        \@lhfax\ fax
-      \fi
-      \if@lhemaildefined
-        \textbar\ \@lhemail\
-      \fi
-      \if@lhwwwdefined
-        \textbar\ \@lhwww
-      \fi
+    \fi
+    \if@lhECUaddressdefined
+      \@lhECUaddress\ \textbar
+    \fi
+    \lhECUPostal
+    \if@usa
+      \textbar\ USA\\
+    \else
+      \\
+    \fi
+    \newcommand{\@sep}{}
+    \if@lhphonedefined
+      \@lhphone\ office%
+      \renewcommand{\@sep}{\textbar}
+    \fi
+    \if@lhfaxdefined
+      \@sep\ \@lhfax\ fax%
+      \renewcommand{\@sep}{\textbar}
+    \fi
+    \if@lhemaildefined
+      \@sep\ \@lhemail%
+      \renewcommand{\@sep}{\textbar}
+    \fi
+    \if@lhwwwdefined
+      \@sep\ \@lhwww
+    \fi
   }
   \fancyfoot{}
   \fancyfoot[R]{

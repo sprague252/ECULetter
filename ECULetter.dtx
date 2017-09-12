@@ -110,12 +110,18 @@
 %             first page.
 % \item[|noletterhead|] \index{noletterhead|hyperit} Do not write the
 %             letterhead to the first page.
+% \item[|usa|] \index{usa|hyperit} Include USA at the end of the postal 
+%             address (set by default).
+% \item[|USA|] \index{USA|hyperit} Synonym for |usa|.
+% \item[|nousa|] \index{nousa|hyperit} Do not include USA at the end of the 
+%             postal address.
+% \item[|noUSA|] \index{noUSA|hyperit} Synonym for |nousa|.
 % \end{description}
 %
 % All other options are passed to the \textsf{article} class
 % (\emph{n.b.}, not the letter class), upon which this class is based. 
-% The \textsf{article} class options |10pt|, |12pt|, and |twocolumn| are
-% not compatible with \textsf{ECULetter} and are silently ignored.
+% The \textsf{article} class option |twocolumn| is
+% not compatible with \textsf{ECULetter} and is silently ignored.
 %
 % \subsection{Required Packages}
 %
@@ -559,6 +565,11 @@
 %    \end{macrocode}
 %
 %    \begin{macrocode}
+\newif\if@usa
+\@usatrue
+%    \end{macrocode}
+%
+%    \begin{macrocode}
 \newif\if@printletterhead
 \@printletterheadtrue
 %    \end{macrocode}
@@ -576,8 +587,12 @@
 %    \begin{macrocode}
 \DeclareOption{bw}{\@bwtrue}
 \DeclareOption{color}{\@bwfalse}
-\DeclareOption{noletterhead}{\@printletterheadfalse}
 \DeclareOption{memo}{\@printmemoheadtrue}
+\DeclareOption{noletterhead}{\@printletterheadfalse}
+\DeclareOption{usa}{\@usatrue}
+\DeclareOption{USA}{\@usatrue}
+\DeclareOption{nousa}{\@usafalse}
+\DeclareOption{noUSA}{\@usafalse}
 %    \end{macrocode}
 %
 %   \changes{v2.0}{2017/09/12}{Options 10pt and 12pt are now available}
@@ -715,6 +730,20 @@
 %    \end{macrocode}
 %
 %    \begin{macrocode}
+\newif\if@lhdeptdefined
+\@lhdeptdefinedfalse
+\DeclareRobustCommand{\@lhdept}{}
+\DeclareRobustCommand{\lhdept}[1]{
+  \DeclareRobustCommand*{\@lhdept}{#1}
+  \setbox0=\hbox{\@lhdept\unskip}\ifdim\wd0=0pt
+    \@lhdeptdefinedfalse
+  \else
+    \@lhdeptdefinedtrue
+  \fi
+}
+%    \end{macrocode}
+%
+%    \begin{macrocode}
 \newif\if@lhECUaddressdefined
 \@lhECUaddressdefinedfalse
 %    \end{macrocode}
@@ -722,7 +751,11 @@
 \DeclareRobustCommand{\@lhECUaddress}{}
 \DeclareRobustCommand{\lhECUaddress}[1]{
   \DeclareRobustCommand*{\@lhECUaddress}{#1}
-  \@lhECUaddressdefinedtrue
+  \setbox0=\hbox{\@lhECUaddress\unskip}\ifdim\wd0=0pt
+    \@lhECUaddressdefinedfalse
+  \else
+    \@lhECUaddressdefinedtrue
+  \fi
 }
 %    \end{macrocode}
 %
@@ -732,8 +765,9 @@
     Greenville, NC 27858-4353
 }
 %    \end{macrocode}
-%
+% 
 %    \begin{macrocode}
+
 \newif\if@lhphonedefined
 \@lhphonedefinedfalse
 %    \end{macrocode}
@@ -1067,35 +1101,54 @@
     \if@bw\else
       \color{ecupurple}
     \fi
+%    \end{macrocode}
+% Only include information that has been defined.
+%    \begin{macrocode}
     \sf\raggedleft \fontsize{9}{10.8}\selectfont
-     \if@lhnamedefined
-       \textbf{\@lhname\if@lhdegreedefined{, \@lhdegree}\fi}
-          \if@lhtitledefined
-            \textbar\ \@lhtitle\\
-          \else
-            \\
-          \fi
-        \fi
-      \if@lhECUaddressdefined
-        \@lhECUaddress \textbar 
+    \if@lhnamedefined
+      \textbf{\@lhname\if@lhdegreedefined{, \@lhdegree}\fi}
+      \if@lhtitledefined
+        \textbar\ \@lhtitle\
       \fi
-      \lhECUPostal\\
-      \if@lhphonedefined
-        \@lhphone\ office
+      \if@lhdeptdefined
+        \textbar\ \@lhdept\\
+      \else
+        \\
       \fi
-      \if@lhfaxdefined
-        \if@lhphonedefined
-          \textbar\ 
-        \fi
-        \@lhfax\ fax
-      \fi
-      \if@lhemaildefined
-        \textbar\ \@lhemail\ 
-      \fi
-      \if@lhwwwdefined
-        \textbar\ \@lhwww
-      \fi
+    \fi
+    \if@lhECUaddressdefined
+      \@lhECUaddress\ \textbar
+    \fi
+    \lhECUPostal
+    \if@usa
+      \textbar\ USA\\
+    \else
+      \\
+    \fi
+%    \end{macrocode}
+% Use the |\@sep| command to use the |\textbar| separator only after the first defined 
+% parameter is included in the letterhead.
+%    \begin{macrocode}
+    \newcommand{\@sep}{}
+    \if@lhphonedefined
+      \@lhphone\ office%
+      \renewcommand{\@sep}{\textbar}
+    \fi
+    \if@lhfaxdefined
+      \@sep\ \@lhfax\ fax%
+      \renewcommand{\@sep}{\textbar}
+    \fi
+    \if@lhemaildefined
+      \@sep\ \@lhemail%
+      \renewcommand{\@sep}{\textbar}
+    \fi
+    \if@lhwwwdefined
+      \@sep\ \@lhwww
+    \fi
   }
+%    \end{macrocode}
+% The ECU webpage URL goes in the footer.
+%    \begin{macrocode}
   \fancyfoot{}
   \fancyfoot[R]{
     \if@bw\else
