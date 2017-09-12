@@ -36,7 +36,7 @@
 %</driver>
 % \fi
 %
-% \CheckSum{526}
+% \CheckSum{587}
 %
 % \CharacterTable
 %  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
@@ -70,6 +70,7 @@
 % \title{The \textsf{ECULetter} class\thanks{This document
 %   corresponds to \textsf{ECULetter}~\fileversion, dated \filedate.}}
 % \author{Mark W. Sprague \\ \texttt{spraguem@ecu.edu}}
+% \date{September 12, 2017}
 %
 % \maketitle
 %
@@ -102,6 +103,17 @@
 % \end{quote}
 % The following \index{class options|hyperit} options are valid:
 % \begin{description}
+%  \changes{v2.0}{2017/09/12}{All font sizes 10pt, 11pt, and 12pt now available}
+% \item[|10pt|] \index{10pt|hyperit} Use a 10-point font in the document body.
+%             This option does not affect the size of the font used in the letterhead. 
+%             This option is passed to the \textsf{article} class.
+% \item[|11pt|] \index{11pt|hyperit} Use an 11-point font in the document body
+%             (set by default).
+%             This option does not affect the size of the font used in the letterhead. 
+%             This option is passed to the \textsf{article} class.
+% \item[|12pt|] \index{12pt|hyperit} Use a 12-point font in the document body.
+%             This option does not affect the size of the font used in the letterhead. 
+%             This option is passed to the \textsf{article} class.
 % \item[|bw|] \index{bw|hyperit} Use black and white graphics for the
 %             letterhead.
 % \item[|color|] \index{color|hyperit} Use color graphics for the
@@ -110,6 +122,7 @@
 %             first page.
 % \item[|noletterhead|] \index{noletterhead|hyperit} Do not write the
 %             letterhead to the first page.
+% \changes{v2.0}{2017/09/12}{(no)usa options to (not) include country}
 % \item[|usa|] \index{usa|hyperit} Include USA at the end of the postal 
 %             address (set by default).
 % \item[|USA|] \index{USA|hyperit} Synonym for |usa|.
@@ -136,7 +149,7 @@
 %
 % \subsection{Required Graphics Files}
 %
-%  \changes{v2.0}{2017/09/12}{2017 ECU logo files}
+%  \changes{v2.0}{2017/09/12}{2017 ECU logo files required}
 % The \textsf{ECULetter} class requires three graphics files to be
 % placed within the latex (|graphicx|) path: \index{ECULogo2017
 % file|hyperit} |ECULogo2017| (color ECU logo, 2017 version), 
@@ -184,6 +197,17 @@
 % Associate Professor) on the letterhead.  The title is only written to
 % the letterhead if |\lhname| is defined.
 %
+% \DescribeMacro{\lhdept}
+%  \changes{v2.0}{2017/09/12}{Department name supplied separately as lhdept}
+% The author's department on the letterhead is set with
+% \begin{quote}
+%     |\lhdept| \marg{Department Name}
+% \end{quote}
+% where $\langle$\emph{Department Name}$\rangle$ is the name of the department as
+% it should appear in the letterhead (\emph{e.g.}
+% Department of Physics). Note that to produce a departmental letterhead, the department
+% name should be supplied as |\lhname| above with |\lhdegree|, |\lhtitle|, and |\lhdept| undefined.
+%
 % \DescribeMacro{\lhECUaddress}
 % The department address on the letterhead is set with
 % \begin{quote}
@@ -191,9 +215,7 @@
 % \end{quote}
 % where $\langle$\emph{address}$\rangle$ is the campus portion of the
 % address on the letterhead.  The $\langle$\emph{address}$\rangle$ can
-% contain formatting and line breaks. The
-% $\langle$\emph{address}$\rangle$ field can be used to format a
-% departmental letterhead (with |\lhname| left undefined).
+% contain formatting.
 %
 % \DescribeMacro{\lhECUPostal}
 % The macro |\ECUPostal| gives the portion of the postal address after
@@ -435,6 +457,7 @@
 % \subsection{Sample User Configuration File}
 %
 % \index{ECULetterDefs.cfg file|hyperit} 
+%  \changes{v2.0}{2017/09/12}{Department name supplied separately as lhdept}
 % \begin{verbatim}
 % % This is a sample user configuration file for use with the ECULetter
 % % class.  Save this file with name ECULetterDefs.cfg, and save it
@@ -452,8 +475,11 @@
 % % Define the title: Professor, Head Honcho, etc. 
 % \lhtitle{Associate Professor} 
 % %
+% % Define the department name.
+% \lhdept{Department of Physics}
+% %
 % % Define the departmental/campus address.
-% \lhECUaddress{Department of Physics \textbar\ Mail Stop 563} 
+% \lhECUaddress{Mail Stop 563} 
 % %
 % % Define the telephone number. You can use different formats for the
 % % number if desired. 
@@ -595,7 +621,7 @@
 \DeclareOption{noUSA}{\@usafalse}
 %    \end{macrocode}
 %
-%   \changes{v2.0}{2017/09/12}{Options 10pt and 12pt are now available}
+%   \changes{v2.0}{2017/09/12}{All font sizes 10pt, 11pt, and 12pt now available}
 %    The \textsf{ECULetter} class is based on the \textsf{article} class,
 %    not the \textsf{letter} class.
 %    Pass font size options to \textsf{article} class.
