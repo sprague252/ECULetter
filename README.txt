@@ -8,17 +8,24 @@ commands for elements of letters and memoranda written on the letterhead.
 Files
 
 ECULetter.dtx - Documented TeX file containing the source code and
-        documentation.
+    documentation.
 ECULetter.ins - LaTeX installer file for the class
 ECULetter.pdf - Documentation file gernerated from ECULetter.dtx
 ECULetterDefs.cfg - Sample user configuration file for ECULetter documents.
 ECULetterTemplate.tex - Document template file for a letter using the
-        ECULetter class.
-ECULogo.pdf - PDF graphics file containing the color ECU logo.
-ECULogoBW.pdf - PDF graphics file containing the black and white ECU logo.
-ECUMemoTemplate.tex - Document template file for a memorandum using the
-        ECULetter class.
-README - This file.
+    ECULetter class.
+ECUMemoTemplate.tex - Document template file for a memorandum using
+    the ECULetter class.
+README.txt - This file.
+
+
+Other Files Needed
+
+ECULogo2017.pdf - PDF graphics file containing the color ECU logo,
+    2017 version; sample available on ECULetter distribution page.
+ECULogo2017BW.pdf - PDF graphics file containing the black and white
+    ECU logo, 2017 version; sample available on ECULetter
+    distribution page.
 
 
 Installation
@@ -39,16 +46,17 @@ section below for further explanation of this.
 	Recommended install location: 
 	    texmf/tex/latex/ECULetter/ECULetter.cls
 
-3. Copy the files ECULogo.pdf and ECULogoBW.pdf to a location in the
+3. Copy the files ECULogo2017.pdf and ECULogo2017BW.pdf to a location in the
 	latex file search path, such as a location in your user or
 	system-local texmf directory tree. Recommended install locations: 
-	    texmf/tex/latex/Graphics/ECULogo.pdf and 
-	    texmf/tex/latex/Graphics/ECULogoBW.pdf
+	    texmf/tex/latex/Graphics/ECULogo2017.pdf and 
+	    texmf/tex/latex/Graphics/ECULogo2017BW.pdf
 
 4. (Optional) Edit the ECULetterDefs.cfg file to include your user
 	information and copy it to a location in the latex file search
 	path, such as a location in your user texmf directory tree. 
 	Recommended install location:
+
 	    texmf/tex/latex/ECULetter/ECULetterDefs.cfg
 
 5. (Optional) Generate a signature image file in PDF format (or other
@@ -59,6 +67,7 @@ section below for further explanation of this.
 	your user texmf directory tree.  Note that you will not be able
 	to include signatures without this file.
 	Recommended install location:
+
 	    texmf/tex/latex/Graphics/signature.pdf
 
 6. (Optional) Edit the document template files ECULetterTemplate.tex
