@@ -1,11 +1,11 @@
-README - ECULetter LaTeX Class
+# README - ECULetter LaTeX Class
 
 These files contain the ECULetter LaTeX class, which provides a
 personalized ECU letterhead in a LaTeX environment. It also includes
 commands for elements of letters and memoranda written on the letterhead.
 
 
-Files
+## Files
 
 ECULetter.dtx - Documented TeX file containing the source code and
     documentation.
@@ -19,7 +19,7 @@ ECUMemoTemplate.tex - Document template file for a memorandum using
 README.txt - This file.
 
 
-Other Files Needed
+### Other Files Needed
 
 ECULogo2017.pdf - PDF graphics file containing the color ECU logo,
     2017 version; sample available on ECULetter distribution page.
@@ -28,7 +28,7 @@ ECULogo2017BW.pdf - PDF graphics file containing the black and white
     distribution page.
 
 
-Installation
+## Installation
 
 Several of the steps below refer to the texmf directory trees. See the
 section below for further explanation of this.
@@ -81,7 +81,7 @@ section below for further explanation of this.
 	where you copied the various files.
 
 
-LaTeX File Search Path and texmf Directory Trees
+## LaTeX File Search Path and texmf Directory Trees
 
 By default, TeX programs will look for referenced files in the directory
 from which the program is run.  If the file is not found, it searches
@@ -90,6 +90,7 @@ system-level local texmf directory tree, and the system-level
 distribution texmf directory tree.  The locations of these trees vary by
 system-type. 
 
+```
     User texmf Directory
     
         You can determine this directory on your machine with the command
@@ -112,6 +113,7 @@ system-type.
     
         MacOS (MacTeX/TeXLive): /usr/local/texlive/texmf-local
         Linux (TeXLive): /usr/local/share/texmf
+```
 
 TeX-related programs search the user texmf directory tree first,
 followed by the system-level local texmf directory tree, and then the
@@ -119,7 +121,7 @@ system-level distribution texmf directory tree. As a rule, you should
 install user-specific items in the user texmf directory tree and items
 for all users in the system-level local texmf directory tree.
 
-Copyright and License
+## Copyright and License
 
 Copyright (C) 2017 by Mark W. Sprague
 This file and the TeX files in this disribution may be distributed
