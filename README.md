@@ -90,36 +90,31 @@ system-level local texmf directory tree, and the system-level
 distribution texmf directory tree.  The locations of these trees vary by
 system-type. 
 
-```
-    User texmf Directory
+### User texmf Directory
     
-        You can determine this directory on your machine with the command
-
+You can determine this directory on your machine with the command
+```
             kpsewhich -var-value=TEXMFHOME
+```
         
-        Here are the locations on some systems:
+Here are the locations on some systems:
 
         MacOS (MacTeX/TeXLive): ~/Library/texmf
         Linux (TeXLive): ~/texmf
         Windows (MikTex): C:\Users\<user name>\Appdata\Local\MikTex\<number>
 
-    System-Local texmf Directory
+### System-Local texmf Directory
 
-        You can determine this directory on your machine with the command
-
+You can determine this directory on your machine with the command
+```
             kpsewhich -var-value=TEXMFLOCAL
+```
         
-        Here are the locations on some systems:
+Here are the locations on some systems:
     
         MacOS (MacTeX/TeXLive): /usr/local/texlive/texmf-local
         Linux (TeXLive): /usr/local/share/texmf
-```
 
-TeX-related programs search the user texmf directory tree first,
-followed by the system-level local texmf directory tree, and then the
-system-level distribution texmf directory tree. As a rule, you should
-install user-specific items in the user texmf directory tree and items
-for all users in the system-level local texmf directory tree.
 
 ## Copyright and License
 
