@@ -61,7 +61,7 @@ your texmf tree and update your ls-R database. See documentation in
 `ECULetter.pdf`. See full installation instructions with other options
 below.
 
-### Full Instructions.
+### Full Instructions
 
 Several of the steps below refer to the texmf directory trees. See the
 section below for further explanation of this.
