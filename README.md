@@ -18,6 +18,8 @@ commands for elements of letters and memoranda written on the letterhead.
 
 ## Files
 
+* ECULetter.cls - LaTeX class file generated from ECULetter.dtx (see
+    instructions for generating this file below),
 * ECULetter.dtx - documented TeX file containing the source code and
     documentation,
 * ECULetter.ins - LaTeX installer file for the class, 
@@ -29,24 +31,19 @@ commands for elements of letters and memoranda written on the letterhead.
 * ECUMemoTemplate.tex - document template file for a memorandum using
     the ECULetter class, and
 * README.txt - this file.
-
-
-### Other Files Needed
-
-* ECULogo.pdf - PDF graphics file containing the purple ECU logo
-    (available on ECULetter distribution page). This file was
-    converted from the ECU Primary logo Purple (EPS) file provided on
-    the [ECU Branding](https://brand.ecu.edu) website using
-    Ghostscript with the following command.
+* ECULogo.pdf - PDF graphics file containing the purple ECU logo.
+    This file was converted from the ECU Primary logo Purple (EPS)
+    file provided on the [ECU Branding](https://brand.ecu.edu)
+    website using Ghostscript with the following command.
 ```
         gs -sOutputFile=ECULogo.pdf -sDEVICE=pdfwrite -dNOPAUSE \
         -dEPSCrop -dBATCH ECU_lockup_primary_Purple.eps
 ```
 * ECULogoBW.pdf - PDF graphics file containing the black and white
-    ECU logo (available on ECULetter distribution page).  This file
-    was converted from the ECU Primary logo Purple (EPS) file
-    provided on the [ECU Branding](https://brand.ecu.edu) website
-    using Ghostscript with the following command.
+    ECU logo. This file was converted from the ECU Primary logo
+    Purple (EPS) file provided on the [ECU
+    Branding](https://brand.ecu.edu) website using Ghostscript with
+    the following command.
 ```
         gs -sOutputFile=ECULogoBW.pdf -sDEVICE=pdfwrite \
         -sColorConversionStrategy=Gray \
@@ -65,7 +62,9 @@ section below for further explanation of this.
 ```   
         latex ECULetter.ins
 ```
-    This will generate the class file ECULetter.cls.
+    This will generate the class file ECULetter.cls. **Note**: A copy of
+     `ECULetter.cls` is provided with this distribution, so it is not
+    necessary to generate it again.
 
 2. Copy the ECULetter.cls file to the appropriate location in the
     latex file search path, such as somewhere in the user texmf
@@ -97,18 +96,23 @@ section below for further explanation of this.
     and ECUMemoTemplate.tex as appropriate and copy them to your
     LaTeX template directory.
 
-7. (Optional) To generate the documentation file ECULetter.pdf, Copy
-    the documentation file ECULetter.pdf, run the following commands.  
+7. (Optional) To generate the documentation file `ECULetter.pdf` from
+    the `ECULetter.dtx` file, run the following commands.  
 ```
         pdflatex ECULetter.dtx
         makeindex -s gind.ist -o ECULetter.ind ECULetter.idx
         makeindex -s gglo.ist -o ECULetter.gls ECULetter.glo
         pdflatex ECULetter.dtx
 ```
-    Then, move the file ECULetter.pdf to the appropriate location (in
-    your preferred texmf directory tree or elsewhere).
+    **Note**: A copy of  `ECULetter.pdf` is provided with this
+    distribution, so it is not necessary to generate it again.
+    
+8. (Optional) Move the file `ECULetter.pdf` to the appropriate
+    location (in your preferred texmf directory tree or elsewhere).
+    Recommended install location:
+    `texmf/doc/ECULetter/ECULetter.pdf`.
 
-8. Update the ls-R database file(s) for the texmf directory trees
+9. Update the ls-R database file(s) for the texmf directory trees
     where you copied the various files. If you added the files to
     your user texmf directory tree on Mac OS or Linux use the
     following command.
