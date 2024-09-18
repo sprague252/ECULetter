@@ -21,7 +21,7 @@
 %<class>\NeedsTeXFormat{LaTeX2e}[2005/12/01]
 %<class>\ProvidesClass{ECULetter}
 %<*class>    
-[2017/09/12 v2.0 ECU letterhead with letter and memo formatting]
+[2024/09/18 v3.0 ECU letterhead with letter and memo formatting]
 %</class>
 %
 %<*driver>
@@ -32,6 +32,8 @@
 \RecordChanges
 \begin{document}
   \DocInput{ECULetter.dtx}
+  \PrintChanges
+  \PrintIndex
 \end{document}
 %</driver>
 % \fi
@@ -57,8 +59,7 @@
 %
 % \newcommand{\hyperit}[1]{\textit{\hyperpage{#1}}}
 %
-% \changes{v1.0}{2017/03/21}{Initial version}
-% \changes{v2.0}{2017/09/12}{ECU 2017 letterhead format}
+% \changes{v3.0}{2024/09/18}{Including changes}
 %
 % \GetFileInfo{ECULetter.dtx}
 %
@@ -103,32 +104,35 @@
 % \end{quote}
 % The following \index{class options|hyperit} options are valid:
 % \begin{description}
-%  \changes{v2.0}{2017/09/12}{All font sizes 10pt, 11pt, and 12pt now available}
-% \item[|10pt|] \index{10pt|hyperit} Use a 10-point font in the document body.
-%             This option does not affect the size of the font used in the letterhead. 
-%             This option is passed to the \textsf{article} class.
-% \item[|11pt|] \index{11pt|hyperit} Use an 11-point font in the document body
-%             (set by default).
-%             This option does not affect the size of the font used in the letterhead. 
-%             This option is passed to the \textsf{article} class.
-% \item[|12pt|] \index{12pt|hyperit} Use a 12-point font in the document body.
-%             This option does not affect the size of the font used in the letterhead. 
-%             This option is passed to the \textsf{article} class.
-% \item[|bw|] \index{bw|hyperit} Use black and white graphics for the
-%             letterhead.
-% \item[|color|] \index{color|hyperit} Use color graphics for the
-%             letterhead (set by default).
-% \item[|memo|] \index{memo|hyperit} Write the memo header to the
-%             first page.
-% \item[|noletterhead|] \index{noletterhead|hyperit} Do not write the
-%             letterhead to the first page.
-% \changes{v2.0}{2017/09/12}{(no)usa options to (not) include country}
-% \item[|usa|] \index{usa|hyperit} Include USA at the end of the postal 
-%             address (set by default).
-% \item[|USA|] \index{USA|hyperit} Synonym for |usa|.
-% \item[|nousa|] \index{nousa|hyperit} Do not include USA at the end of the 
-%             postal address.
-% \item[|noUSA|] \index{noUSA|hyperit} Synonym for |nousa|.
+%     \changes{v2.0}{2017/09/12}{All font sizes 10pt, 11pt, and 12pt now
+%     available}
+%     \item[|10pt|] \index{10pt|hyperit} Use a 10-point font in the
+%       document body. This option does not affect the size of the
+%       font used in the letterhead. This option is passed to the
+%       \textsf{article} class.
+%     \item[|11pt|] \index{11pt|hyperit} Use an 11-point font in the
+%       document body (set by default). This option does not affect
+%       the size of the font used in the letterhead. This option is
+%       passed to the \textsf{article} class.
+%     \item[|12pt|] \index{12pt|hyperit} Use a 12-point font in the
+%       document body. This option does not affect the size of the
+%       font used in the letterhead. This option is passed to the
+%       \textsf{article} class.
+%     \item[|bw|] \index{bw|hyperit} Use black and white graphics for
+%       the letterhead.
+%     \item[|color|] \index{color|hyperit} Use color graphics for the
+%       letterhead (set by default).
+%     \item[|memo|] \index{memo|hyperit} Write the memo header to the
+%       first page.
+%     \item[|noletterhead|] \index{noletterhead|hyperit} Do not write
+%       the letterhead to the first page.
+%     \changes{v2.0}{2017/09/12}{(no)usa options to (not) include country}
+%     \item[|usa|] \index{usa|hyperit} Include USA at the end of the
+%       postal address (set by default).
+%     \item[|USA|] \index{USA|hyperit} Synonym for |usa|.
+%     \item[|nousa|] \index{nousa|hyperit} Do not include USA at the
+%       end of the postal address.
+%     \item[|noUSA|] \index{noUSA|hyperit} Synonym for |nousa|.
 % \end{description}
 %
 % All other options are passed to the \textsf{article} class
@@ -149,16 +153,20 @@
 %
 % \subsection{Required Graphics Files}
 %
-%  \changes{v2.0}{2017/09/12}{2017 ECU logo files required}
+% \changes{v2.0}{2017/09/12}{2017 ECU logo files required}
+% \changes{v3.0}{2024/09/18}{New logo file names} 
+% \changes{v3.0}{2024/09/18}{Logos same size as official logo file}
 % The \textsf{ECULetter} class requires three graphics files to be
-% placed within the latex (|graphicx|) path: \index{ECULogo2017
-% file|hyperit} |ECULogo2017| (color ECU logo, 2017 version), 
-% \index{ECULogo2017BW file|hyperit} |ECULogo2017BW| (black and white ECU
-% logo, 2017 edition), and
-% \index{signature file|hyperit} |signature| (signature image).  These
-% files may be in any format accessible to the
+% placed within the latex (|graphicx|) path: 
+% \index{ECULogo.pdf file|hyperit} |ECULogo.pdf| (purple ECU logo), 
+% \index{ECULogoBW.pdf file|hyperit} |ECULogoBW.pdf| (black and white
+% ECU logo), and \index{signature file|hyperit} |signature| (signature
+% image).  These files may be in any format accessible to the
 % |graphicx| package (with the appropriate extensions) and the files in
-% the latex path may be symlinks.
+% the latex path may be symlinks. This LaTeX class file expects the
+% logos in the files to be the same size as logo in the official
+% ECU\_lockup\_primary\_Purple.eps file. See the PDF files distributed with
+% this release, which were converted from the official file.
 %
 %\subsection{Letterhead Content}
 %
@@ -203,10 +211,11 @@
 % \begin{quote}
 %     |\lhdept| \marg{Department Name}
 % \end{quote}
-% where $\langle$\emph{Department Name}$\rangle$ is the name of the department as
-% it should appear in the letterhead (\emph{e.g.}
-% Department of Physics). Note that to produce a departmental letterhead, the department
-% name should be supplied as |\lhname| above with |\lhdegree|, |\lhtitle|, and |\lhdept| undefined.
+% where $\langle$\emph{Department Name}$\rangle$ is the name of the
+% department as it should appear in the letterhead (\emph{e.g.}
+% Department of Physics). Note that to produce a departmental
+% letterhead, the department name should be supplied as |\lhname| above
+% with |\lhdegree|, |\lhtitle|, and |\lhdept| undefined.
 %
 % \DescribeMacro{\lhECUaddress}
 % The department address on the letterhead is set with
@@ -321,8 +330,9 @@
 % \begin{quote}
 %     |\memodate| \marg{date}
 % \end{quote}
-% where $\langle$\emph{date}$\rangle$ is date to be used in in the DATE-field of the memo
-% header (DATE: date). If |\memodate| is not supplied, it is replaced by
+% where $\langle$\emph{date}$\rangle$ is date to be used in in the
+% DATE-field of the memo header (DATE: date). If |\memodate| is not
+% supplied, it is replaced by
 % |\today|.
 %
 % \DescribeMacro{\memosubjlabel}
@@ -621,10 +631,11 @@
 \DeclareOption{noUSA}{\@usafalse}
 %    \end{macrocode}
 %
-%   \changes{v2.0}{2017/09/12}{All font sizes 10pt, 11pt, and 12pt now available}
-%    The \textsf{ECULetter} class is based on the \textsf{article} class,
-%    not the \textsf{letter} class.
-%    Pass font size options to \textsf{article} class.
+% \changes{v2.0}{2017/09/12}{All font sizes 10pt, 11pt, and 12pt now
+% available}
+% The \textsf{ECULetter} class is based on the \textsf{article} class,
+% not the \textsf{letter} class. Pass font size options to
+% \textsf{article} class.
 %    \begin{macrocode}
 \DeclareOption{10pt}{
   \@sizegiventrue
@@ -687,7 +698,8 @@
 %    \end{macrocode}
 %
 % Define ECU colors.
-%    \changes{v2.0}{2017/09/12}{ECU colors for letterhead header, headrule, and footer}
+% \changes{v2.0}{2017/09/12}{ECU colors for letterhead header, headrule,
+% and footer}
 %    \begin{macrocode}
 \definecolor{ecupurple}{RGB}{80, 45, 127}
 \definecolor{ecugold}{RGB}{255, 200, 0}
@@ -1108,20 +1120,27 @@
        \fi
        \leaders\hrule height \headrulewidth\hfill}}
 %    \end{macrocode}
-% The black and white  and color ECU logo files are in the |\includegraphics| commands below. 
-% these files must be somewhere in the latex path. 
-% (Test with the terminal command |$ kpsewhich filename.pdf|.)
+% 
+% \changes{v3.0}{2024/09/18}{New logo file names} 
+% \changes{v3.0}{2024/09/18}{Logo scale and viewport settings}
+% The black and white and color ECU logo files are in the
+% |\includegraphics| commands below. these files must be somewhere in
+% the latex path. (Test with the terminal command |kpsewhich filename.pdf|.) 
+% The scale and viewport settings in the
+% |\includegraphics| command are for the PDF files converted from the
+% |official ECU\_lockup\_primary\_Purple.eps| file.
 %    \begin{macrocode}
   \fancyhf{}
   \fancyhead[L]{%
     \if@bw
-      \includegraphics[scale=0.75, viewport=48 8 144 72]{ECULogo2017BW}
+      \includegraphics[scale=0.156, viewport=261 78 348 142]{ECULogoBW.pdf}
     \else
-      \includegraphics[scale=0.75, viewport=48 8 144 72]{ECULogo2017}
+      \includegraphics[scale=0.156, viewport=261 78 348 142]{ECULogo.pdf}
     \fi
   }
 %    \end{macrocode}
-% Next the letterhead text. For a color letterhead, use the color ecupurple defined above.
+% Next the letterhead text. For a color letterhead, use the color
+% ecupurple defined above.
 %    \begin{macrocode}
   \fancyhead[R]{
     \if@bw\else
@@ -1152,8 +1171,8 @@
       \\
     \fi
 %    \end{macrocode}
-% Use the |\@sep| command to use the |\textbar| separator only after the first defined 
-% parameter is included in the letterhead.
+% Use the |\@sep| command to use the |\textbar| separator only after the
+% first defined parameter is included in the letterhead.
 %    \begin{macrocode}
     \newcommand{\@sep}{}
     \if@lhphonedefined
