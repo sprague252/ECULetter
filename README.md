@@ -67,13 +67,13 @@ Several of the steps below refer to the texmf directory trees. See the
 section below for further explanation of this.
 
 1. Generate the class file by running the following latex command
-    from the directory containing the ECULetter files. 
+    from the directory containing the ECULetter files. This will
+    generate the class file ECULetter.cls. **Note**: A copy of
+    `ECULetter.cls` is provided with this distribution, so it is not
+    necessary to generate it again.
 ```   
         latex ECULetter.ins
 ```
-    This will generate the class file ECULetter.cls. **Note**: A copy of
-     `ECULetter.cls` is provided with this distribution, so it is not
-    necessary to generate it again.
 
 2. Copy the ECULetter.cls file to the appropriate location in the
     latex file search path, such as somewhere in the user texmf
@@ -106,15 +106,15 @@ section below for further explanation of this.
     LaTeX template directory.
 
 7. (Optional) To generate the documentation file `ECULetter.pdf` from
-    the `ECULetter.dtx` file, run the following commands.  
+    the `ECULetter.dtx` file, run the following commands. **Note**: A
+    copy of  `ECULetter.pdf` is provided with this distribution, so
+    it is not necessary to generate it again.
 ```
         pdflatex ECULetter.dtx
         makeindex -s gind.ist -o ECULetter.ind ECULetter.idx
         makeindex -s gglo.ist -o ECULetter.gls ECULetter.glo
         pdflatex ECULetter.dtx
 ```
-    **Note**: A copy of  `ECULetter.pdf` is provided with this
-    distribution, so it is not necessary to generate it again.
     
 8. (Optional) Move the file `ECULetter.pdf` to the appropriate
     location (in your preferred texmf directory tree or elsewhere).
